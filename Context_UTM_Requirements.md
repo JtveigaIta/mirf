@@ -218,4 +218,58 @@ O que exigir:
 [10]: https://www.autonomyglobal.co/wp-content/uploads/2025/03/GUTMA-TF-Global-UTM-Ecosystems-Readiness-Index-2024-report-min.pdf?utm_source=chatgpt.com "Global UTM Ecosystems' Readiness Index 2024"
 [11]: https://www.transpordiamet.ee/sites/default/files/documents/2024-09/D5.3%20-%20U-space%20Sandbox%20Standards%20and%20Services.pdf?utm_source=chatgpt.com "U-space Sandbox Standards and Services"
 
+Sim — encontrei uma boa quantidade de referências que usam ou discutem o termo “ecosistema UTM” (ou “ecosystem UTM / U-space ecosystem”). Aqui estão as mais relevantes, com potenciais para uso no seu relatório técnico, especialmente no tema de ecossistema (atores, responsabilidades, interações, infraestrutura digital) para sistemas UTM.
+
+---
+
+## Principais referências sobre “ecosistema UTM”
+
+1. Airbus – artigo “UTM is a key enabler of AAM”
+
+   * Texto: “Unmanned Traffic Management (UTM) is a completely new ecosystem that has to deal with unmanned vehicles.” ([Airbus][1])
+   * Destaque: mostra claramente a noção de “ecosistema” em que UTM faz parte de um sistema mais amplo de mobilidade aérea avançada (AAM), com múltiplos pilares (veículos, infraestruturas, serviços, UTM/ATM). ([Airbus][1])
+   * Utilidade: serve para fundamentar argumentos de que o sistema UTM não é isolado, mas parte de um ecossistema distribuído com vários atores e serviços (o que encaixa muito bem no seu “estrutura de atores” e modelo de responsabilidades).
+
+2. Artigo: “Unmanned Aerial Traffic Management System Architecture for U-Space In-Flight Services” (Applied Sciences, 2021)
+
+   * Faz referência explícita ao “U-space ecosystem” como iniciativa europeia para UTM. ([MDPI][2])
+   * Aborda arquitetura de sistema, serviços em-voo, e declara “the U-space ecosystem … offers U-space services to the different actors in the U-space ecosystem” (página resumo). ([MDPI][2])
+   * Utilidade: boa para embasar a secção de especificação de requisitos referentes a atores, serviços e interfaces dentro do ecossistema.
+
+3. National Aeronautics and Space Administration (NASA) / Federal Aviation Administration (FAA) — “Unmanned Aircraft System Traffic Management (UTM) Project”
+
+   * Documento define UTM como um “ecosystem” para operações de muitos UAS em baixa altitude. Por exemplo: “a key attribute of the UTM ConOps is sharing of traffic, weather, and terrain information between the UTM and UAS services and the UAS operations. Analogous to the information shared by crowd-sourced traffic applications, the UTM eco-system must facilitate sharing of information between UAS operations.” ([NASA Documentos Técnicos][3])
+   * Utilidade: fortalece a noção de ecossistema UTM sob a perspectiva norte-americana, útil para comparações ou para mostrar alinhamento internacional.
+
+4. Livro: Unmanned Aircraft Systems Traffic Management: UTM (Michael Scott Baum, 2021)
+
+   * O livro menciona “global ecosystem of players advancing UTM …” e estrutura o UTM como parte de um ecossistema global. ([Routledge][4])
+   * Utilidade: boa fonte para introdução teórica, para justificar que seu trabalho trata de “ecossistema UTM” (e não apenas de “sistema UTM”) e para embasar margens de literatura.
+
+5. Artigo “Sensors and Communication Simulation for Unmanned Traffic Management”
+
+   * Descreve a necessidade de simular “UTM ecosystem” – “Unmanned traffic management (UTM) systems will become a key enabler to the future drone market ecosystem, enabling the safe concurrent operation of both manned and unmanned aircrafts.” ([PubMed][5])
+   * Utilidade: bom para reforçar a ideia de “mercado/ecossistema de drone + UTM”, ou seja, o ecossistema se estende além da infraestrutura técnica para incluir o “mercado” ou “operações”.
+
+---
+
+## Como incorporar ao seu relatório técnico
+
+Dado que seu trabalho se relaciona com sistemas UTM/UTM-SAC e arquitetura distribuída, eis como usar essas referências:
+
+* Na seção de **estrutura de atores** (como você já tinha: ANSP/DECEA, Operadores, USS, SIPs, FIMS) — mencione que isso representa **o ecossistema UTM**, conforme a literatura, e cite as referências acima para suportar essa terminologia. Por exemplo: “Este trabalho adota o termo ‘ecossistema UTM’ para referir-se ao conjunto de atores, serviços, infraestruturas e interações distribuídas (conforme Airbus 2023; Applied Sciences 2021)”.
+
+* Na seção de **arquitetura e serviços** — use o artigo de 2021 sobre o U-space ecosystem para fundamentar que os requisitos de serviços (pre-flight, in-flight) ocorrem no contexto de esse ecossistema, não de um sistema monolítico. Use como base para definir requisitos de interoperabilidade, modularidade, escalabilidade.
+
+* Na seção de **normas e diretrizes** — ao mencionar International Civil Aviation Organization (ICAO) UTM Framework ou European Union Aviation Safety Agency (EASA) U-Space, inclua que essas abordagens reconhecem o UTM como ecossistema global/híbrido, o que reforça a necessidade de requisitos de interoperabilidade e governança distribuída.
+
+* Na **discussão de desafios / limitações** — pode usar a referência que mostra que o ecossistema ainda está em evolução (ex: “ecosystem of players advancing UTM” Baum) para justificar lacunas, necessidade de maturação, integração com AAM, etc.
+
+---
+
+[1]: https://www.airbus.com/en/newsroom/stories/2023-10-utm-is-a-key-enabler-of-aam?utm_source=chatgpt.com "UTM is a key enabler of AAM | Airbus"
+[2]: https://www.mdpi.com/2076-3417/11/9/3995?utm_source=chatgpt.com "Unmanned Aerial Traffic Management System Architecture for U-Space In-Flight Services"
+[3]: https://ntrs.nasa.gov/api/citations/20190000370/downloads/20190000370.pdf?utm_source=chatgpt.com "Unmanned Aircraft System Traffic Management (UTM)"
+[4]: https://www.routledge.com/Unmanned-Aircraft-Systems-Traffic-Management-UTM/Baum/p/book/9781003124689?utm_source=chatgpt.com "Unmanned Aircraft Systems Traffic Management: UTM - 1st Edition - Mich"
+[5]: https://pubmed.ncbi.nlm.nih.gov/33573192/?utm_source=chatgpt.com "Sensors and Communication Simulation for Unmanned Traffic Management - PubMed"
 
