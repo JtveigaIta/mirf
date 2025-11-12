@@ -78,3 +78,144 @@ A implementação de sistemas UTM já é uma realidade global, com diferentes mo
 6.  **Aposporis, P.** *A review of global and regional frameworks for the Unmanned Aircraft Systems Traffic Management (UTM).* ScienceDirect, 2024. https://www.sciencedirect.com/science/article/pii/S2590198224000502
 7.  **World Bank.** *TRAFFIC MANAGEMENT OF THE FUTURE, TODAY A Global Perspective on UTM.* Disponível em: https://documents1.worldbank.org/curated/en/099080524233017078/pdf/P171737-95642d3c-06d6-47b6-bab5-c8c783a42462.pdf
 
+# Diretrizes e boas-práticas (normas / órgãos) para especificação de requisitos de sistemas UTM
+
+Abaixo você tem um guia prático — organizado por organismo normativo — com as práticas recomendadas para **especificar requisitos** de um Sistema UTM (USS / FIMS / serviços U-space / SIPs). Cada bloco traz recomendações acionáveis (requisitos, métricas, verificação) e referências bibliográficas confiáveis para consulta. Todas as afirmações que podem ser verificadas têm referência imediata.
+
+---
+
+## Visão rápida (resumo executivo)
+
+* Especifique requisitos em camadas: **arquitetura**, **serviços**, **segurança & privacidade**, **interoperabilidade**, **segurança funcional / risco**, **performances/SLAs**, **monitoramento & auditoria** e **documentação / rastreabilidade**. ([OACI][1])
+* Use **modelos de dados padronizados** (FIMS / USS interfaces / ED-269/ED-318 quando aplicável) e defina contratos de serviço (APIs, formatos, semântica). ([Administração Federal de Aviação][2])
+* Para segurança operacional, aplique avaliação de risco baseada em SORA/JARUS e requisitos de DAL quando componentes impactam segurança aérea. ([Jarus RPAS][3])
+
+---
+
+## ICAO — UTM Framework (Edição 4): orientações para requisitos de alto nível
+
+O que exigir:
+
+* **Compatibilidade ATM/UTM**: requisitos de interface, prioridades e troca de restrições dinâmicas (NOTAM analog). Especifique necessidades de interoperabilidade com ATM local (formatos, latência, semântica). ([OACI][1])
+* **Core capabilities**: planeamento de voo, serviço tático de desconfliction, registro & histórico, notificações de emergência — cada capacidade vira uma suíte de requisitos funcionais e métricas (p.ex. latência de atualização de posse de espaço). ([OACI][4])
+  Boas práticas de engenharia de requisitos:
+* Mapear *capability → requisito funcional → métricas (KPI) → teste de aceitação*.
+* Requisitos traceáveis à segurança operacional (rastreabilidade requisitos ⇄ riscos ⇄ mitigação). ([OACI][1])
+
+---
+
+## FAA / NASA (UTM ConOps v2.0 & FIMS) — requisitos de integração e dados
+
+O que exigir:
+
+* **FIMS**: defina requisitos claros de API (endpoints, payloads), modelos de autorização/autenticação e retentividade de logs para auditoria. FIMS é o “mediador” entre USSs e autoridade — especifique latência máxima, garantia de entrega e formatos aceitos. ([Administração Federal de Aviação][2])
+* **USS network**: requisitos para publicação de intenções de voo (timings, schemas), serviços de deconfliction, e interoperabilidade entre USSs. Defina SLAs (ex.: tempo máximo para atualização de posição, resolução temporal mínima). ([NASA Documentos Técnicos][5])
+  Boas práticas:
+* Defina **contratos de interface** (OpenAPI / JSON Schema / protobuf), políticas de versionamento e estratégia de migração.
+* Especifique requisitos de telemetria mínima (frequência, precisão) e tolerâncias para sincronização entre USSs. ([Administração Federal de Aviação][2])
+
+---
+
+## EASA — U-Space / EU 2021/664 — requisitos regulatórios e operacionais
+
+O que exigir:
+
+* **Conformidade legal**: verifique os requisitos do U-Space (serviços essenciais, responsabilidades dos USSPs, níveis de automação) e traduza em requisitos contratuais e técnicos. ([EUR-Lex][6])
+* **SIP/SDSP**: requisitos mínimos para provedores suplementares de dados (qualidade, latência, formatos), e políticas de certificação/aceitação pelo regulador. ([EASA][7])
+  Boas práticas:
+* Implementar *conformity checklist* para cada componente (USS, SIP, interface com ANSP) mapeando artigos do regulamento → requisito → evidência. ([EASA][8])
+
+---
+
+## ASTM (F3548, F3448) — especificações técnicas e interoperabilidade
+
+O que exigir:
+
+* **Requisitos de interoperabilidade**: adotar os elementos do F3548 para formatar serviços UTM, mensagens e comportamento esperado dos USS. Use a norma como *means of compliance* para requisitos de dados e serviços. ([ASTM International | ASTM][9])
+  Boas práticas:
+* Em requisitos de sistema, referencie cláusulas ASTM para: formatos de mensagens, requisitos de resiliência, disponibilidade e interfaces de interoperabilidade entre operadores e provedores. ([ASTM International | ASTM][9])
+
+---
+
+## JARUS / SORA — segurança, avaliação de risco e níveis de garantia
+
+O que exigir:
+
+* **Avaliação de risco**: integrar SORA (ou equivalente) ao processo de requisitos — cada requisito de segurança funcional deve mapear para controles requeridos pelo SORA (redução de risco, evidências). ([Jarus RPAS][3])
+* **DAL / segurança funcional**: quando componentes UTM afetam separação/segurança, especificar critérios de confiabilidade, redundância e requisitos de falha (MTTF, MTTFd, probabilidade de perda). ([Jarus RPAS][3])
+  Boas práticas:
+* Produza um **Safety Requirements Specification (SRS)** que liga modos de falha a requisitos de detecção, mitigação e recuperação; inclua testes (FMEAs, FTA) e critérios de aceitação. ([Jarus RPAS][3])
+
+---
+
+## Checklist prática para especificação de requisitos UTM (modelo pronto para usar)
+
+1. **Contexto & Escopo** — atores (ANSP, USS, Operators, SIPs, FIMS), restrições e fronteiras do sistema. ([OACI][4])
+2. **Requisitos Funcionais** — p.ex.: registro/gerenciamento de planos de voo, serviço de deconfliction, NOTAM dinâmico, notificações de emergência. Para cada requisito: *descrição*, *entradas/saídas*, *pré-condições*, *pós-condições*, *KPI de aceitação*. ([OACI][1])
+3. **Requisitos de Dados / Interfaces** — schemas (JSON/XML), contratos FIMS/USS, versionamento e tolerâncias (ex.: precisão de posição ±x m, atualização ≤ y s). ([Administração Federal de Aviação][2])
+4. **Requisitos de Segurança & Privacidade** — autenticação (OAuth2 / mTLS), autorização por escopo, proteção de dados pessoais, retenção de logs, criptografia em trânsito e repouso; requisitos de GDPR/legislação local quando aplicável. ([Administração Federal de Aviação][2])
+5. **Requisitos de Segurança Funcional** — DALs, requisitos de redundância, detecção de falha, comportamento em perda de link; mapear para SORA/JARUS. ([Jarus RPAS][3])
+6. **Performances / SLA** — disponibilidade (ex.: 99.95%), latência (p.ex. atualização de posição < 1 s para operações críticas), tempo de recuperação. Use ASTM como referência para métricas. ([ASTM International | ASTM][9])
+7. **Operação & Monitoramento** — telemetria, dashboards, alertas, retenção de dados para investigação. ([Administração Federal de Aviação][2])
+8. **Verificação & Validação** — testes unitários/integrados, testes de interoperabilidade USS↔USS↔FIMS, simulações (DoE), campanhas de sandbox / trials (padrão EU U-Space sandboxes). ([EASA][7])
+9. **Documentação & Rastreabilidade** — req ↔ design ↔ teste ↔ evidência certificatória; checklist de conformidade regulatória. ([EASA][8])
+
+---
+
+## Metodologias de verificação e evidências (o que exigir nos requisitos)
+
+* **Testes de Interop**: cenário end-to-end envolvendo USS A ↔ USS B ↔ FIMS, com cenários de conflito, perda de dados e emergência; requisitos medem sucesso (p.ex. percentil 99 de resolução de conflito < X s). ([Administração Federal de Aviação][2])
+* **Ensaios de robustez**: injetar falhas (latência, perda de mensagens) e verificar modos degradados. Documentar resultados como evidência de conformidade. ([ASTM International | ASTM][9])
+* **Avaliação de risco contínua**: reavaliar SORA ao longo do ciclo de vida e after-change. ([Jarus RPAS][3])
+
+---
+
+## Rastreabilidade regulatória — como ligar requisitos às normas
+
+* Para cada requisito crítico, adicione metadados: `RegulaçãoReferencia` (ex.: ICAO-UtM §X / EU 2021/664 Art-Y / ASTM F3548 §Z / JARUS SORA Step N). Isso acelera auditoria e revisão regulatória. ([OACI][1])
+
+---
+
+## Referências bibliográficas e leituras seguras (consultar / citar)
+
+> Documentos oficiais (primários — **recomendado** consultar e citar diretamente)
+
+1. ICAO — *Unmanned Aircraft Systems Traffic Management (UTM) – A Common Framework with Core Principles for Global Harmonization* (UTM Framework, Edition 4). ([OACI][1])
+2. FAA / NASA — *UTM Concept of Operations Version 2.0* (inclui descrição do FIMS e USS). ([Administração Federal de Aviação][2])
+3. Commission Implementing Regulation (EU) 2021/664 — *Regulatory framework for the U-space* (texto legal e Easy-Access Rules via EASA). ([EUR-Lex][6])
+4. ASTM International — *F3548 (Standard Specification for UTM)* (e documentos relacionados como F3448). ([ASTM International | ASTM][9])
+5. JARUS — *SORA (Specific Operations Risk Assessment)* e demais documentos técnicos (guidelines de segurança). ([Jarus RPAS][3])
+
+> Artigos e relatórios técnicos (secundários — contexto, melhores práticas)
+
+6. NASA / NTRS — *USS specification & related technical reports* (background de arquitetura USS). ([NASA Documentos Técnicos][5])
+7. GUTMA / relatórios de readiness e sandboxes (análises de maturidade UTM / U-space). ([Autonomy Global -][10])
+8. Relatórios e whitepapers de sandboxes / projetos nacionais (p.ex. documentos de U-space Sandbox Standards and Services). ([transpordiamet.ee][11])
+
+> Como usar essas referências:
+
+* Baixe os PDFs oficiais (ICAO, FAA, EASA, ASTM, JARUS) e use-os como *baselines* para cláusulas normativas dos seus requisitos. ([OACI][1])
+
+---
+
+## Sugestão prática de próximos passos (ação imediata)
+
+1. Baixe e **mapeie**: ICAO (Edition 4), FAA UTM ConOps v2.0, EU 2021/664, ASTM F3548, JARUS SORA — crie um *matrix de conformidade* (colunas: artigo/cláusula → requisito do sistema → evidência). ([OACI][1])
+2. Escreva um **template SRS** (Safety Requirements Specification) e um **Interface Control Document (ICD)** para FIMS/USS. ([Administração Federal de Aviação][2])
+3. Planeje um **programa de testes de interoperabilidade** em sandbox/região piloto e inclua SORA dentro do ciclo de verificação. ([transpordiamet.ee][11])
+
+---
+
+[1]: https://www.icao.int/sites/default/files/left-menu-pdfs/UTM%20Framework%20Edition%204.pdf?utm_source=chatgpt.com "Unmanned Aircraft Systems Traffic Management (UTM)"
+[2]: https://www.faa.gov/sites/faa.gov/files/2022-08/UTM_ConOps_v2.pdf?utm_source=chatgpt.com "Unmanned Aircraft System (UAS) Traffic Management (UTM)"
+[3]: https://jarus-rpas.org/wp-content/uploads/2024/06/SORA-v2.5-Main-Body-Release-JAR_doc_25.pdf?utm_source=chatgpt.com "SORA-v2.5-Main-Body-Release-JAR_doc_25.pdf"
+[4]: https://www.icao.int/utm-guidance?utm_source=chatgpt.com "UTM Guidance"
+[5]: https://ntrs.nasa.gov/api/citations/20170011588/downloads/20170011588.pdf?attachment=true&utm_source=chatgpt.com "USS Specification"
+[6]: https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32021R0664&utm_source=chatgpt.com "Commission Implementing Regulation (EU) 2021/664"
+[7]: https://www.easa.europa.eu/en/document-library/easy-access-rules/easy-access-rules-u-space-regulation-eu-2021664?utm_source=chatgpt.com "Easy Access Rules for U-space (Regulation (EU) 2021/664)"
+[8]: https://www.easa.europa.eu/en/document-library/regulations/commission-implementing-regulation-eu-2021664?utm_source=chatgpt.com "Commission Implementing Regulation (EU) 2021/664 - EASA"
+[9]: https://www.astm.org/f3548-21.html?utm_source=chatgpt.com "Standard Specification for UAS Traffic Management (UTM) ..."
+[10]: https://www.autonomyglobal.co/wp-content/uploads/2025/03/GUTMA-TF-Global-UTM-Ecosystems-Readiness-Index-2024-report-min.pdf?utm_source=chatgpt.com "Global UTM Ecosystems' Readiness Index 2024"
+[11]: https://www.transpordiamet.ee/sites/default/files/documents/2024-09/D5.3%20-%20U-space%20Sandbox%20Standards%20and%20Services.pdf?utm_source=chatgpt.com "U-space Sandbox Standards and Services"
+
+
