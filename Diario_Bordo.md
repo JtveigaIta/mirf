@@ -1,6 +1,193 @@
 PESQUISAS 12.11.2025 (Objetivo, produzir uma linha de AÇÃO e DoE Mínimo Conceitual)
 ---
+Agora que tenho o DoE, estou obserrvando que talvez está um pouco fora do que pensei, a abordagem no que diz respeito " falhas de alto nível e pre/tático em ambientes multi-UAS, recomendo um *co-simulation* stack que permita testar comportamento tático, interdependências e integração ATM" está correto, tambem sobre a arquitetura gerada, quanto as considerações dos módulos principais:
 
+A Arquitetura GERAL DO SISTEMA
+------------
+TERMOS ACâDEMICOS ÚTEIS para PESQUISA:
+---
+1) modelo ODAA (Observe–Decide–Act–Adapt) ou o loop OODA.
+
+2) Excelente — seu direcionamento está perfeito: o **MIRF** como estrutura cognitiva de **resiliência e replanejamento em missões BVLOS**, equivalente conceitualmente a modelos como o **OODA loop** e **ODDA (Observe–Detect–Decide–Act)**, mas aplicado ao contexto **UTM / U-space**.
+
+Com base nas referências que você trouxe — **ADACORSA [1]**, **NASA UTM CONOPS [2]**, **BlueSky e BlueSky-Gym [3,5]**, **Cranfield Digital Twin [4]**, **SESAR [7]**, e **hierarchical mission replanning [6]** —, seguem **termos de pesquisa e estruturas teóricas correlatas** que você pode usar para fundamentar o MIRF como **metodologia global de resposta a falhas**:
+
+---
+
+## 🔹 1. Termos conceituais equivalentes ao ODDA/OODA aplicáveis ao MIRF
+
+| Categoria           | Termo de pesquisa                         | Descrição / Aplicação em UTM e MIRF                                                                                                                                                             |
+| ------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ciclo cognitivo** | **OODA Loop (Observe–Orient–Decide–Act)** | Modelo clássico de tomada de decisão em sistemas dinâmicos — base conceitual para agentes autônomos e replanejamento tático em tempo real (usado pela NASA e SESAR para autonomia distribuída). |
+|                     | **ODDA (Observe–Detect–Decide–Act)**      | Versão mais orientada à **detecção de falhas e reconfiguração**; aplicável ao MIRF como fluxo de resposta a eventos anômalos.                                                                   |
+|                     | **Sense–Detect–Respond–Recover (SDRR)**   | Usado em **segurança cibernética e sistemas resilientes** (ver aplicações em U-space resiliente). Se alinha ao ciclo do MIRF: perceber → diagnosticar → agir → medir impacto.                   |
+|                     | **Monitor–Analyze–Plan–Execute (MAPE-K)** | Modelo de controle de sistemas autônomos da engenharia de software e IA — base para arquiteturas de **autonomic computing** e **digital twins** (referência direta com [4]).                    |
+|                     | **Perceive–Comprehend–Project (Endsley)** | Modelo de **situational awareness**, usado pela NASA e SESAR no contexto de UTM para avaliar estados críticos do espaço aéreo e projetar consequências.                                         |
+|                     | **Detect–Diagnose–Recover (DDR)**         | Estrutura formal de sistemas **fault-tolerant**, aplicável a falhas de alto nível (missões, rotas, zonas).                                                                                      |
+
+---
+
+## 🔹 2. Termos de pesquisa técnicos relacionados a falhas, autonomia e UTM
+
+| Tema                               | Termos recomendados                                                                                                                               | Relevância                                                                                             |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Gestão de falhas e resiliência** | “Resilient U-space”, “Fault management architecture for UTM”, “Autonomous contingency management”                                                 | Estudos da **SESAR** e **ADACORSA** sobre segurança operacional distribuída.                           |
+| **Planejamento e replanejamento**  | “Hierarchical mission replanning for multiple UAVs” [6], “Adaptive trajectory management”, “Multi-agent reconfiguration strategies”               | Correlato direto ao **núcleo decisório do MIRF** (fase 3 do seu grafo).                                |
+| **Monitoramento e diagnóstico**    | “Anomaly detection in UTM”, “Digital twin for UAS fault testing” [4], “Telemetry-based diagnostics”, “MAS observability”                          | Mostra como sistemas de simulação (como **BlueSky**) podem gerar observações e diagnósticos dinâmicos. |
+| **Tomada de decisão autônoma**     | “Autonomous decision-making loop”, “Reinforcement learning for airspace management” [5], “Policy-based control”, “Self-organizing U-space agents” | Aplica-se à etapa “Decisão → Ação” do MIRF.                                                            |
+| **Simulação e teste**              | “Co-simulation Digital Twin framework”, “Agent-based airspace simulation”, “Hybrid UTM testbed”, “BlueSky U-space integration”                    | Fundamentos técnicos para o **giga de teste e simulação** que você pretende estruturar.                |
+| **Métricas de impacto e KPIs**     | “Mission success rate (TSM)”, “Time to react (TTR)”, “Airspace load impact”, “Resilience metrics for U-space”                                     | Usadas para medir a eficácia da resposta MIRF (fase 5 do seu grafo).                                   |
+
+---
+
+## 🔹 3. Estruturas metodológicas compatíveis com o MIRF
+
+1. **ADACORSA Conceptual Model of Fault Propagation and Recovery**
+   → Inspira o MIRF no nível conceitual, mas o seu é aplicado ao **nível tático e pré-tático BVLOS** (cenários multi-drone, integração UTM).
+
+2. **NASA UTM CONOPS (2018)**
+   → Define papéis e fluxos de decisão entre **UTM, operadores e veículos** — excelente base para formalizar o MIRF como **módulo cognitivo dentro de um sistema UTM distribuído**.
+
+3. **BlueSky + BlueSky-Gym (SESAR, 2024)**
+   → Framework aberto para testar **algoritmos de decisão baseados em aprendizado**. Pode servir para implementar o MIRF em ambiente de co-simulação.
+
+4. **Cranfield Digital Twin Framework (2023)**
+   → Mostra como conectar **modelos de simulação + dados reais de sistemas ATM/UTM** para testar comportamentos de falha e recuperação.
+   Isso corresponde ao **testbed que você planeja construir**.
+
+5. **U-space Resilience Framework (SESAR 2023–2024)**
+   → Apresenta o conceito de **“operational resilience loop”** — altamente alinhado ao propósito do MIRF: detectar, reagir, adaptar e manter a operação.
+
+---
+
+## 🔹 4. Sugestão de termos combinados para pesquisa avançada
+
+Você pode usar expressões como:
+
+* “UTM resilience loop”
+* “Autonomous contingency management for U-space”
+* “Fault-tolerant decision-making for multi-UAS missions”
+* “Resilient digital twin for BVLOS simulation”
+* “MAPE-K based UTM autonomy architecture”
+* “Operational fault cycle in U-space environments”
+* “OODA-inspired planning for distributed UAS missions”
+* “MAS coordination under UTM contingencies”
+* “Anomaly detection and route reconfiguration in U-space”
+
+---
+o MIRF como estrutura cognitiva de resiliência e replanejamento em missões BVLOS, equivalente conceitualmente a modelos como o OODA loop e ODDA (Observe–Detect–Decide–Act), mas aplicado ao contexto UTM / U-space.
+--
+| Categoria           | Termo de pesquisa                         | Descrição / Aplicação em UTM e MIRF                                                                                                                                                             |
+| ------------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ciclo cognitivo** | **OODA Loop (Observe–Orient–Decide–Act)** | Modelo clássico de tomada de decisão em sistemas dinâmicos — base conceitual para agentes autônomos e replanejamento tático em tempo real (usado pela NASA e SESAR para autonomia distribuída). |
+|                     | **ODDA (Observe–Detect–Decide–Act)**      | Versão mais orientada à **detecção de falhas e reconfiguração**; aplicável ao MIRF como fluxo de resposta a eventos anômalos.                                                                   |
+|                     | **Sense–Detect–Respond–Recover (SDRR)**   | Usado em **segurança cibernética e sistemas resilientes** (ver aplicações em U-space resiliente). Se alinha ao ciclo do MIRF: perceber → diagnosticar → agir → medir impacto.                   |
+|                     | **Monitor–Analyze–Plan–Execute (MAPE-K)** | Modelo de controle de sistemas autônomos da engenharia de software e IA — base para arquiteturas de **autonomic computing** e **digital twins** (referência direta com [4]).                    |
+|                     | **Perceive–Comprehend–Project (Endsley)** | Modelo de **situational awareness**, usado pela NASA e SESAR no contexto de UTM para avaliar estados críticos do espaço aéreo e projetar consequências.                                         |
+|                     | **Detect–Diagnose–Recover (DDR)**         | Estrutura formal de sistemas **fault-tolerant**, aplicável a falhas de alto nível (missões, rotas, zonas).                                                                                      |
+
+| Tema                               | Termos recomendados                                                                                                                               | Relevância                                                                                             |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Gestão de falhas e resiliência** | “Resilient U-space”, “Fault management architecture for UTM”, “Autonomous contingency management”                                                 | Estudos da **SESAR** e **ADACORSA** sobre segurança operacional distribuída.                           |
+| **Planejamento e replanejamento**  | “Hierarchical mission replanning for multiple UAVs” [6], “Adaptive trajectory management”, “Multi-agent reconfiguration strategies”               | Correlato direto ao **núcleo decisório do MIRF** (fase 3 do seu grafo).                                |
+| **Monitoramento e diagnóstico**    | “Anomaly detection in UTM”, “Digital twin for UAS fault testing” [4], “Telemetry-based diagnostics”, “MAS observability”                          | Mostra como sistemas de simulação (como **BlueSky**) podem gerar observações e diagnósticos dinâmicos. |
+| **Tomada de decisão autônoma**     | “Autonomous decision-making loop”, “Reinforcement learning for airspace management” [5], “Policy-based control”, “Self-organizing U-space agents” | Aplica-se à etapa “Decisão → Ação” do MIRF.                                                            |
+| **Simulação e teste**              | “Co-simulation Digital Twin framework”, “Agent-based airspace simulation”, “Hybrid UTM testbed”, “BlueSky U-space integration”                    | Fundamentos técnicos para o **giga de teste e simulação** que você pretende estruturar.                |
+| **Métricas de impacto e KPIs**     | “Mission success rate (TSM)”, “Time to react (TTR)”, “Airspace load impact”, “Resilience metrics for U-space”                                     | Usadas para medir a eficácia da resposta MIRF (fase 5 do seu grafo).                                   |
+
+
+
+--
+modelo FFPN oferece uma base formal para especificar, simular e validar o comportamento do MIRF: Neste caso nao aceitei bem, acredito que Resumir Tudo a eventos discretos, para representacao Conceitual, replicacao e simulação das Redes de Conhecimento: Pois agora estamos numa abordagem orientado a dados, e o contexto será complexo, o que quero dizer, se analizarmos o arquivo DoE e o código fornecido, se limita e eventos do tipo Broker por meio da camada de comunicação - A questão que fica, serão estes TIPOS de FALHA que desejo tratar?
+------------
+de forma técnica, o **processo completo de detecção e resposta a uma falha de alto nível** no contexto de missões BVLOS dentro do MIRF.
+Abaixo está uma **descrição em linguagem humana, explicativa e simples**, mostrando passo a passo o **comportamento e funcionamento do módulo de falha**.
+
+---
+
+## 🧩 Explicação simples do processo do Módulo de Falha (MIRF)
+
+O módulo de falhas do MIRF atua como um “sistema nervoso” do simulador: ele observa o ambiente, identifica quando algo anormal acontece e decide a melhor forma de reagir.
+O processo ocorre em **cinco etapas principais**:
+
+---
+
+### **1. Estímulo – Injeção de Falha**
+
+Tudo começa com um **evento externo** que provoca uma situação inesperada.
+Exemplo: o sistema ATM (Gerenciamento de Tráfego Aéreo) **ativa uma Zona de Exclusão Aérea**, onde nenhum drone pode entrar.
+
+➡️ Isso é o **estímulo inicial** — algo que muda as condições do espaço aéreo e exige uma resposta.
+
+---
+
+### **2. Propagação e Observação**
+
+O sistema percebe que, com essa mudança, o **plano de voo atual do drone se tornou inválido**.
+Em outras palavras, o drone agora está prestes a voar para dentro de uma área proibida.
+
+O MIRF transforma isso em uma **observação**:
+
+> “O plano de voo atual viola uma geofence ativa.”
+
+➡️ Aqui o módulo apenas observa e registra o problema, sem ainda decidir nada. É a **fase de percepção da falha**.
+
+---
+
+### **3. Análise e Decisão (Núcleo do MIRF)**
+
+O MIRF analisa o que observou e tenta **entender a causa e a gravidade**.
+Ele diagnostica:
+
+> “Há um conflito espacial crítico entre a rota planejada e uma zona restrita.”
+
+Com base nesse diagnóstico, o sistema toma uma **decisão inteligente**:
+
+> “É necessário replanejar a rota para contornar a zona de exclusão.”
+
+➡️ Essa é a **fase cognitiva** do processo — o cérebro do MIRF entra em ação, raciocinando sobre o que fazer.
+
+---
+
+### **4. Ação e Execução**
+
+Depois de decidir o que fazer, o sistema **executa a ação** correspondente.
+O MIRF **gera um novo plano de voo** e envia essa atualização para o agente (drone).
+
+O resultado é que o **drone passa a seguir a nova rota**, agora ajustada e segura.
+
+➡️ Essa é a fase **de reação e controle ativo** — o MIRF aplica a solução no sistema em tempo real.
+
+---
+
+### **5. Medição de Impacto (KPIs)**
+
+Por fim, o MIRF **mede o impacto da sua decisão** usando indicadores de desempenho (KPIs):
+
+* **Latência de Decisão (TTR):** quanto tempo o sistema levou para perceber e reagir à falha.
+* **Impacto no Espaço Aéreo:** quanto espaço adicional foi usado para o desvio.
+* **Sucesso da Missão (TSM):** o drone conseguiu completar sua missão, mesmo com o imprevisto?
+
+➡️ Essa etapa fecha o ciclo de aprendizado — o MIRF **avalia o quanto sua resposta foi eficiente**, permitindo melhorar continuamente.
+
+---
+
+## 🧠 Em resumo
+
+| Etapa                 | O que acontece                                 | Resultado                       |
+| --------------------- | ---------------------------------------------- | ------------------------------- |
+| 1️⃣ Estímulo          | Um evento externo muda as condições de voo     | Uma falha é injetada            |
+| 2️⃣ Observação        | O sistema percebe um estado inválido           | Falha é reconhecida             |
+| 3️⃣ Análise e decisão | O MIRF entende o problema e decide o que fazer | Estratégia definida             |
+| 4️⃣ Execução          | O sistema envia o novo plano de voo            | Drone reconfigura a rota        |
+| 5️⃣ Medição           | O MIRF avalia o resultado da ação              | Aprendizado e melhoria contínua |
+
+---
+
+Posso complementar este texto com uma **versão acadêmica**, mostrando como esse processo se encaixa no **ciclo de resiliência do MIRF** (detecção, decisão, ação, aprendizado) — citando também referências como o modelo **ODAA (Observe–Decide–Act–Adapt)** ou o **loop OODA**.
+Quer que eu faça isso?
+
+-------------
 Compreendido. A sua necessidade é por um modelo conceitual que vá além de uma simples Rede de Petri, focando em **falhas de alto nível (táticas e estratégicas)** e que seja diretamente aplicável a um simulador como o PlaNAR UTM. O objetivo é permitir a execução de **Testes de Missão e Desenho de Experimentos (DoE)**, onde eventos do mundo ATM/UTM (como fechamento de zonas) são os estímulos, e os resultados são medidos por KPIs operacionais (latência de decisão, impacto no espaço aéreo, etc.).
 
 A inspiração no projeto ADACORSA é perfeita, pois ele foca na resiliência e certificação, que são os pilares do MIRF.
