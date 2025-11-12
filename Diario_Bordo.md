@@ -1,5 +1,50 @@
 PESQUISAS 12.11.2025 (Objetivo, produzir uma linha de AÇÃO e DoE Mínimo Conceitual)
 ---
+A ultima etapa da pesquisa, dando algums passos atraz foi buscar colocar minha abordagem no contexto global:
+
+Com certeza. Preparar uma revisão da literatura que conecte esses trabalhos e normas é fundamental para posicionar o MIRF academicamente e demonstrar sua relevância.
+
+A seguir, apresento uma revisão discursiva e simplificada, como solicitado, que tece uma narrativa coesa sobre o tratamento e a propagação de falhas no contexto UTM, utilizando os documentos e frameworks que você mencionou como pilares.
+
+---
+
+### Revisão da Literatura: Resiliência e Tratamento de Falhas em Ecossistemas UTM
+
+A garantia de operações seguras e eficientes com Veículos Aéreos Não Tripulados (UAS), especialmente em cenários Além da Linha de Visada Visual (BVLOS), depende fundamentalmente da capacidade do sistema de gerenciar falhas. A literatura recente tem se afastado da simples tolerância a falhas em nível de componente para uma abordagem mais holística de **resiliência operacional**. Esta revisão conecta conceitos-chave de documentos da NASA, SESAR e trabalhos acadêmicos para construir o alicerce teórico que justifica uma arquitetura como o MIRF.
+
+#### 1. O Fluxo de Decisão e a Necessidade de um "Cérebro" Cognitivo: NASA UTM CONOPS
+
+O **Conceito de Operações (CONOPS) do UTM da NASA (2018)** estabelece a base para um ecossistema de gerenciamento de tráfego distribuído. Ele define os papéis e as responsabilidades entre os diversos atores: operadores de UAS, Provedores de Serviço UTM (USS) e a autoridade de tráfego aéreo (ATM). O ponto crucial do CONOPS é que a segurança não é garantida por um controle centralizado, mas por uma **troca de informações e uma negociação de intenções de voo**.
+
+No contexto de falhas, o CONOPS prevê que os operadores são responsáveis por gerenciar suas próprias contingências. No entanto, ele deixa uma lacuna clara: *como* um operador, especialmente um que gerencia uma frota de drones autônomos, deve tomar decisões ótimas em tempo real quando uma falha ocorre? Uma falha não afeta apenas o drone, mas também o plano de voo compartilhado com o USS e, por consequência, todo o ecossistema. É aqui que o MIRF se encaixa: ele atua como o **módulo cognitivo** que preenche essa lacuna, permitindo que um operador cumpra suas responsabilidades de forma inteligente e automatizada, analisando a propagação da falha no nível tático (a missão imediata) e pré-tático (o impacto futuro na operação e no espaço aéreo).
+
+#### 2. O Ciclo de Resiliência e a Propagação de Falhas: ADACORSA e SESAR
+
+Enquanto a NASA define "quem faz o quê", os projetos europeus focam em "como fazer de forma segura". O **Modelo Conceitual do ADACORSA** inspira a compreensão da **propagação de falhas**. Uma falha em um sensor, por exemplo, não é um evento isolado; ela se propaga, degradando a capacidade de navegação, que por sua vez pode invalidar um plano de voo e gerar um conflito. O MIRF pega essa ideia e a eleva do nível do veículo para o nível da missão multiagente. Uma falha em um drone de uma coalizão se propaga, degradando a capacidade da *coalizão* de cumprir um objetivo estratégico (como a cobertura de uma área).
+
+Essa visão é fortemente corroborada pelo **Framework de Resiliência do U-space (SESAR, 2023-2024)**. Este trabalho introduz formalmente o conceito de **“operational resilience loop” (ciclo de resiliência operacional)**, um processo contínuo de **Detectar, Reagir, Adaptar e Aprender**. Este ciclo é praticamente um sinônimo da arquitetura do MIRF:
+*   **Detectar:** O MIRF monitora a telemetria e os dados do ecossistema para identificar anomalias.
+*   **Reagir:** O MIRF executa ações imediatas para garantir a segurança (o *Safety Shield*).
+*   **Adaptar:** Esta é a fase estratégica, onde o MIRF replaneja a missão, reconfigura coalizões e negocia novos planos com o USS, mantendo a operação viável mesmo em modo degradado.
+*   **Aprender:** Os dados coletados durante o ciclo alimentam os modelos de aprendizado para melhorar futuras respostas.
+
+O MIRF, portanto, não é apenas um sistema de tratamento de falhas, mas uma implementação prática do ciclo de resiliência operacional proposto pelo SESAR para o U-space.
+
+#### 3. O Ambiente de Teste e Validação: Gêmeos Digitais e Co-Simulação
+
+Validar um sistema complexo como o MIRF em voos reais é caro e arriscado. A literatura recente converge na solução: **co-simulação e Gêmeos Digitais**.
+
+O **Framework de Gêmeo Digital de Cranfield (2023)** demonstra como conectar diferentes simuladores (um para a física do drone, outro para o tráfego aéreo) com dados do mundo real para criar um ambiente de teste de alta fidelidade. Esta abordagem permite testar cenários de falha complexos que seriam impossíveis de replicar fisicamente. Por exemplo, é possível simular como a degradação do sinal GNSS (dado real) afeta um modelo de voo (simulador de física) dentro de um corredor de tráfego aéreo movimentado (simulador ATM). O testbed que você planeja construir para o PlaNAR UTM segue exatamente essa filosofia, integrando modelos de falha, modelos de voo e a lógica de decisão do MIRF em um único ambiente.
+
+Para a camada de aprendizado de máquina, o **BlueSky e o BlueSky-Gym (SESAR, 2024)** oferecem a peça final. Eles fornecem um ambiente de simulação de tráfego aéreo de código aberto, projetado especificamente para treinar e testar algoritmos de decisão baseados em Aprendizado por Reforço (RL). A existência de um framework como o BlueSky-Gym valida a abordagem de usar RL para otimizar decisões táticas em UTM. O MIRF pode ser treinado e validado neste tipo de ambiente, onde suas políticas de replanejamento podem ser comparadas com outras abordagens de forma padronizada e reprodutível.
+
+### Conclusão da Revisão
+
+A literatura forma uma narrativa clara e convergente. A **NASA** estabelece a necessidade de tomada de decisão distribuída. O **ADACORSA** e o **SESAR** definem o que essa decisão deve fazer: seguir um ciclo de resiliência para gerenciar a propagação de falhas em nível de missão. Finalmente, **Cranfield** e os criadores do **BlueSky** mostram *como* validar essa capacidade: através de Gêmeos Digitais em ambientes de co-simulação.
+
+O **MIRF** se posiciona de forma única na interseção de todos esses conceitos. Ele não reinventa uma peça isolada, mas sim **integra** essas ideias em uma arquitetura coesa que serve como o cérebro cognitivo para um operador de frota autônoma, implementando o ciclo de resiliência em um ambiente de simulação de alta fidelidade, exatamente como preconizado pelo estado da arte.
+
+-------------------------------------------------------------------------------------------------------------------
 Agora que tenho o DoE, estou obserrvando que talvez está um pouco fora do que pensei, a abordagem no que diz respeito " falhas de alto nível e pre/tático em ambientes multi-UAS, recomendo um *co-simulation* stack que permita testar comportamento tático, interdependências e integração ATM" está correto, tambem sobre a arquitetura gerada, quanto as considerações dos módulos principais:
 
 A Arquitetura GERAL DO SISTEMA
