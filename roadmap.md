@@ -68,6 +68,8 @@ O roteiro é um documento vivo e pode ser ajustado com base nas descobertas da p
     -   Planejar os primeiros passos para a transferência *sim-to-real*, calibrando os modelos com dados de voos reais em um ambiente controlado.
 
 ---
+Projeto Inspiração: https://adacorsa.eu/index.php/outcomes/dissemination.html
+
 Espero que estes documentos ajudem a estruturar e impulsionar seu projeto.
 
 Podemos prosseguir com mais alguma etapa? Por exemplo, criar o arquivo `CODE_OF_CONDUCT.md` ou detalhar um dos itens do roteiro em uma especificação técnica.
