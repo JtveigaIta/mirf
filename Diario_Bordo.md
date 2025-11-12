@@ -1,6 +1,130 @@
 PESQUISAS 12.11.2025 (Objetivo, produzir uma linha de AÇÃO e DoE Mínimo Conceitual)
 ---
 
+Compreendido. A sua necessidade é por um modelo conceitual que vá além de uma simples Rede de Petri, focando em **falhas de alto nível (táticas e estratégicas)** e que seja diretamente aplicável a um simulador como o PlaNAR UTM. O objetivo é permitir a execução de **Testes de Missão e Desenho de Experimentos (DoE)**, onde eventos do mundo ATM/UTM (como fechamento de zonas) são os estímulos, e os resultados são medidos por KPIs operacionais (latência de decisão, impacto no espaço aéreo, etc.).
+
+A inspiração no projeto ADACORSA é perfeita, pois ele foca na resiliência e certificação, que são os pilares do MIRF.
+
+A seguir, apresento um modelo conceitual para um **Grafo de Fluxo de Falhas (Fault Flow Graph - FFG)**, projetado para ser o núcleo do motor de simulação de falhas do MIRF. Este modelo é mais rico que uma Rede de Petri, pois incorpora semântica, hierarquia e contratos.
+
+---
+
+### Modelo Conceitual: Grafo de Fluxo de Falhas (FFG) para o MIRF
+
+Este modelo descreve como um **evento adverso** (a falha) se propaga através das camadas de decisão do sistema, desde sua origem até a execução de uma resposta e a avaliação de seu impacto.
+
+#### 1. Elementos do Grafo (Ontologia Mínima)
+
+O grafo é composto por nós e arestas com significados bem definidos (semântica).
+
+**Nós (Nodes):** Representam estados, entidades, eventos ou informações no sistema.
+
+| Tipo de Nó | Descrição | Exemplo |
+| :--- | :--- | :--- |
+| `Event` | Um estímulo externo ou interno que inicia um fluxo de falha. | Perda de sinal GNSS, Notificação de Zona Restrita (NOTAM). |
+| `SystemState` | O estado atual de um componente ou do sistema. | `GNSS_DEGRADED`, `COALITION_INCOMPLETE`. |
+| `Observation` | A percepção de uma mudança de estado pelo MIRF. | "Telemetria indica desvio de rota > 50m". |
+| `Diagnosis` | A conclusão do MIRF sobre a causa raiz do evento. | `ROOT_CAUSE: GPS_JAMMING`. |
+| `Decision` | Uma escolha estratégica ou tática feita pelo MIRF. | `DECISION: INITIATE_RTH`. |
+| `Action` | Um comando concreto enviado a um agente ou ao simulador. | `COMMAND: SET_MODE('RTH')`. |
+| `KPI_Metric` | Um indicador de performance a ser medido. | `Decision_Latency`, `Airspace_Impact`. |
+
+**Arestas (Edges):** Representam a relação causal ou temporal entre os nós.
+
+| Tipo de Aresta | Descrição | Exemplo |
+| :--- | :--- | :--- |
+| `triggers` | Um evento que causa uma mudança de estado. | `Event` --triggers--> `SystemState` |
+| `is_observed_as` | Um estado do sistema que é percebido pelo MIRF. | `SystemState` --is_observed_as--> `Observation` |
+| `leads_to` | Uma observação que leva a um diagnóstico ou decisão. | `Observation` --leads_to--> `Diagnosis` |
+| `results_in` | Uma decisão que resulta em uma ação concreta. | `Decision` --results_in--> `Action` |
+| `impacts` | Uma ação ou estado que afeta um KPI. | `Action` --impacts--> `KPI_Metric` |
+
+---
+
+#### 2. Diagrama do Grafo de Fluxo de Falhas (FFG)
+
+Este diagrama mostra o fluxo completo, desde a injeção do evento até a medição do impacto.
+
+```mermaid
+graph TD
+    subgraph "1. Estímulo (Injeção de Falha)"
+        A[E: Evento ATM <br/> 'Zona de Exclusão Aérea Ativada']
+    end
+
+    subgraph "2. Propagação e Observação"
+        A -- triggers --> B(S: Estado do Sistema <br/> 'Rota Atual Inválida')
+        B -- is_observed_as --> C(O: Observação <br/> 'Plano de Voo viola Geofence Ativa')
+    end
+
+    subgraph "3. Análise e Decisão (Núcleo do MIRF)"
+        C -- leads_to --> D(D: Diagnóstico <br/> 'Conflito Espacial Crítico')
+        D -- leads_to --> E(De: Decisão <br/> 'Replanejar Rota para Contornar Zona')
+    end
+
+    subgraph "4. Ação e Execução"
+        E -- results_in --> F(A: Ação <br/> 'Enviar Novo Plano de Voo ao Agente')
+        F -- impacts --> G(S: Estado do Sistema <br/> 'Drone em Rota Replanejada')
+    end
+
+    subgraph "5. Medição de Impacto (KPIs)"
+        E -- impacts --> KPI1(K: KPI <br/> 'Latência de Decisão (TTR)')
+        F -- impacts --> KPI2(K: KPI <br/> 'Impacto no Espaço Aéreo (Volume Adicional)')
+        G -- impacts --> KPI3(K: KPI <br/> 'Sucesso da Missão (TSM)')
+    end
+
+    %% Styling
+    style A fill:#ffcdd2,stroke:#b71c1c
+    style B fill:#ffe0b2,stroke:#333
+    style C fill:#fff9c4,stroke:#333
+    style D fill:#c5cae9,stroke:#333
+    style E fill:#b3e5fc,stroke:#333
+    style F fill:#dcedc8,stroke:#333
+    style G fill:#e1f5fe,stroke:#333
+    style KPI1 fill:#f8bbd0,stroke:#333
+    style KPI2 fill:#f8bbd0,stroke:#333
+    style KPI3 fill:#f8bbd0,stroke:#333
+```
+
+---
+
+#### 3. Como Este Modelo Permite Testes de Missão e DoE
+
+Este grafo não é apenas um desenho; ele é um **modelo executável** para a simulação. Veja como ele atende aos seus requisitos:
+
+1.  **Injeção de Eventos ATM como Estímulos:**
+    *   O ponto de partida do grafo é sempre um nó do tipo `Event`. Para o seu DoE, você pode criar uma biblioteca de eventos:
+        *   `Event(type='AirspaceClosure', details={polygon: [...], start_time: '...', end_time: '...'})`
+        *   `Event(type='GNSS_Outage', details={area: '...', level: 'degraded'})`
+        *   `Event(type='MannedAircraft_Emergency', details={trajectory: [...], corridor: '...'})`
+    *   O simulador PlaNAR UTM simplesmente "injeta" esses nós no grafo em tempos de simulação específicos para iniciar o fluxo.
+
+2.  **Registro de KPIs Operacionais:**
+    *   Os nós do tipo `KPI_Metric` são "coletores" de dados. Cada vez que uma aresta `impacts` aponta para um deles, um valor é registrado com um carimbo de tempo.
+    *   **TSM (Taxa de Sucesso da Missão):** O nó `KPI3` é atualizado no final da simulação, verificando se o objetivo final da missão foi cumprido, mesmo após a falha.
+    *   **TTR (Tempo para Reconfigurar / Latência de Decisão):** O nó `KPI1` calcula a diferença de tempo entre o carimbo de tempo do nó `Observation` (quando o problema foi notado) e o do nó `Decision` (quando a solução foi decidida).
+    *   **Impacto no Espaço Aéreo:** O nó `KPI2` pode calcular o volume de espaço aéreo adicional necessário para a nova rota em comparação com a original, uma métrica crucial para operações em larga escala.
+
+3.  **Integração com a Arquitetura do MIRF:**
+    *   **Camada de Observação (`Observation`):** Corresponde aos monitores de telemetria e conformidade.
+    *   **Camada de Análise (`Diagnosis`):** É onde a base de conhecimento especialista e os modelos de ML do MIRF atuam para classificar a falha.
+    *   **Camada de Decisão (`Decision`):** Representa o planejador de coalizão (MAS) e o motor de replanejamento estratégico.
+    *   **Camada de Ação (`Action`):** É a interface que traduz a decisão em um comando para o agente (via Behavior Tree, por exemplo) ou para o simulador.
+
+### Próximos Passos Práticos
+
+Com base neste modelo conceitual, podemos avançar para:
+
+1.  **Definir o Esquema de Dados (YAML/JSON):** Formalizar a estrutura de cada tipo de nó e aresta em um formato de dados, criando um "dicionário" para o seu simulador.
+2.  **Esboçar um Plano de Simulação (DoE):** Criar uma matriz de experimentos. Por exemplo:
+    *   **Cenário 1:** Voo BVLOS simples. **Injetar:** `AirspaceClosure`. **Medir:** TTR, Sucesso da Missão.
+    *   **Cenário 2:** Missão de cobertura com 3 drones. **Injetar:** `GNSS_Outage` em um drone. **Medir:** TTR para re-coalizão, degradação da cobertura, latência de decisão.
+3.  **Produzir uma Bibliografia em BibTeX:** Fornecer as referências acadêmicas que fundamentam este tipo de modelo (grafos semânticos, DoE em simulação, etc.) para fortalecer sua pesquisa.
+
+Este modelo FFG lhe dá a estrutura conceitual necessária para construir um motor de simulação de falhas robusto e alinhado com os objetivos da sua pesquisa.
+
+Gostaria de prosseguir com a definição do **esquema de dados em YAML (item 1)** e o **plano de simulação (item 2)**?
+
+---------------------------------------------------------------------------------------------------------------------------
 # Visão geral curta (alinhada ao ADACORSA)
 
 ADACORSA trata da preparação técnica, sensoriamento e integração para viabilizar BVLOS de forma resiliente e certificável — excelente base de inspiração para MIRF porque enfatiza redundância, integração de sensores e alinhamento regulatório. ([adacorsa.eu][1])
