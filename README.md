@@ -117,6 +117,9 @@ Se você utilizar ou referenciar este projeto em pesquisas, relatórios ou publi
 
 ## Referências Adicionais
 
+   Jackson Tavares Veiga. MISSION REPLANNING AND CONTROL FRAMEWORK (MRCF): A STRATEGIC ARCHITECTURE FOR BVLOS OPERATIONS IN UTM ENVIRONMENTS. TechRxiv. November 11, 2025.
+DOI: 10.36227/techrxiv.176283639.98510048/v1
+
  J. T. Veiga, M. A. Pessoa, F. Junqueira, P. E. Miyagi, and D. J. dos Santos Filho, “A systematic modelling procedure to design agent-oriented control to coalition of capabilities—in the context of I4.0 as virtual assets (AAS),” *Computers*, vol. 10, no. 12, p. 161, 2021.
 
  J. T. Veiga, “Proposta de um método para o controle de coalizão de recursos virtuais baseado em multi-agentes no contexto I4.0,” Ph.D. dissertation, Universidade de São Paulo, 2022.
@@ -126,9 +129,3 @@ Se você utilizar ou referenciar este projeto em pesquisas, relatórios ou publi
  F. L. S. D. Santos, “pyAutonomousAgent: An academic tool for modeling autonomous agent behaviors using behavior trees,” *JATM*, 2023. [Online]. Available: https://www.scielo.br/j/jatm/a/fqNpVmY4RhchPsGQGdjpXVd/
 
 ---
----
-Espero que este `README.md` atenda às suas necessidades! Podemos agora:
-
-1.  **Gerar um diagrama de arquitetura mais detalhado** com base nos componentes técnicos (como Gêmeos Digitais, MAS Planner, etc.).
-2.  **Escrever um guia de contribuição (`CONTRIBUTING.md`)** para que outros pesquisadores possam colaborar com o projeto.
-3.  **Criar um roteiro (Roadmap)** com os próximos passos para o desenvolvimento e validação do MIRF.
