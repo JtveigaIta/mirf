@@ -1,3 +1,363 @@
+PESQUISAS 18.11.2025 (Objetivo, planejamento para Apresentacao e Estruturacao da QUALIS)
+---
+Nesse dia, eu fiz os textos tanto para apresentação dos PITCH Planar, quanto PITCH da QUALIS. Após estes planos, tambem comecei o template em .ppt para QUALIS, porem resolvi rodar o exemplo fornecido pelo programa, e tambem, começar o preenchimento do docuemnto FAPESP. Algumas coisas que pensei em conjunto foi como divulgar e escolha de busca de alunos e orientação, para meta de gerar dez trabalhos relacionados em 2026.
+
+( ) Rodar e Iniciar a divisão do documento QUALIS
+( ) Fazer a Introducao e Contexto para o MIRF
+( ) Elencar possiveis parceiros: ENCITA, e outros programas tanto no ITA, IFAL, ITA-CE, Federal de SP, etc. Buscar de novo contato com o colega que possui base de dados dos alunos e programas internos
+( ) Programar os artigos resumo para forum, para divulgação e amplicar o alcance: Minicurso, Artigo MRCF, Site PlaNAR, projeto Planar, DEV do MIRF e inserir nos programas de UAS o PlaNAR UTM.
+---
+MIRF — *Mission Intelligence & Reconfiguration Framework*, parte da sua linha de pesquisa/projeto de doutorado — alinhado à integração com o MRCF e o PlaNAR UTM / artefato físico correspondente. Vou propor para cada slide: título, conteúdo chave (bullet-points) e sugestão visual. Você pode adaptar conforme o estilo da apresentação (PowerPoint, Keynote, Beamer etc).
+
+---
+
+### Slide 1 – Título / Gancho
+
+**Título**: MIRF - Mission Intelligence & Reconfiguration Framework
+**Conteúdo**:
+
+* Sua assinatura (nome, instituição, doutorado)
+* “Apresentação para … (ex: banca, patrocinador, conferência)”
+* Frase de impacto: “Resiliência ativa para operações BVLOS no ecossistema UTM”
+  **Visual**: Logo ou banner do projeto (com o “MIRF”), ou um drone em ambiente BVLOS, para atrair atenção.
+
+---
+
+### Slide 2 – Contexto e Problema
+
+**Título**: Desafio nas operações BVLOS / UTM
+**Conteúdo**:
+
+* Crescente uso de UAS (drones) em missões além da linha de visada (BVLOS)
+* Ecossistemas de tráfego de UAS (UTM) demandam robustez e adaptabilidade
+* Falhas possíveis: hardware, sensores, comunicações, ambiente externo
+* Problema: projetos tradicionais focam no planejamento ou no voo — e pouco em reconfiguração ativa frente a falhas
+  **Visual**: Gráfico ou diagrama ilustrando falha de drone, ambiente UTM, múltiplos drones operando.
+
+---
+
+### Slide 3 – Visão Geral da Solução MIRF
+
+**Título**: O que é o MIRF?
+**Conteúdo**:
+
+* Framework de controle avançado, plugin para o simulador PlaNAR UTM. ([GitHub][1])
+* Objetivo: fortalecer a resiliência e inteligência de missões de UAS, especialmente BVLOS. ([GitHub][1])
+* Abordagem híbrida: aprendizado profundo, redes de conhecimento especialistas, sistemas multiagentes. ([GitHub][1])
+  **Visual**: Esquema da arquitetura conceitual (por ex. camadas Estratégica-Tática-Operacional) retirada do README ou adaptada.
+
+---
+
+### Slide 4 – Integração com o ecossistema (PlaNAR + MRCF)
+
+**Título**: Como o MIRF se conecta ao PlaNAR UTM e ao MRCF
+**Conteúdo**:
+
+* O ecossistema:
+
+  * PlaNAR UTM → núcleo do simulador para UTM. ([GitHub][1])
+  * MRCF → Mission Replanning and Control Framework, módulo de replanejamento tático. ([GitHub][1])
+  * MIRF → módulo de injeção e recuperação de falhas, reconfiguração de missão em face de eventos adversos. ([GitHub][1])
+* Benefício: fluxo de missão completo desde planejamento, execução, falha e reconfiguração.
+  **Visual**: Diagrama de blocos com PlaNAR → MRCF → MIRF, com setas mostrando função de cada.
+
+---
+
+### Slide 5 – Arquitetura Conceitual do MIRF
+
+**Título**: Arquitetura Conceitual
+**Conteúdo**:
+
+* Camadas de decisão: Estratégica, Tática, Operacional. ([GitHub][1])
+* Autonomia e reconfiguração dinâmica: realocação de recursos, formação de novas coalizões. ([GitHub][1])
+* Feedback contínuo: monitoramento, análise de status, ajuste em tempo real. ([GitHub][1])
+  **Visual**: O diagrama “flowchart TD” do README (ou adaptado para slide) mostrando as camadas e o loop de realimentação.
+
+---
+
+### Slide 6 – Inovações Técnicas e Diferenciais
+
+**Título**: Inovações & Diferenciais Técnicos
+**Conteúdo**:
+
+* Controle híbrido: model-based + learning-based. ([GitHub][1])
+* Aprendizado guiado por conhecimento (knowledge-guided ML) para incorporar regras de segurança. ([GitHub][1])
+* Gêmeos digitais (digital twins) do ambiente e agentes para simulação what-if. ([GitHub][1])
+* Sistemas multiagentes (MAS) e teoria de coalizões para robustez distribuída. ([GitHub][1])
+* Verificação em tempo de execução (runtime verification) via escudos de segurança. ([GitHub][1])
+  **Visual**: Ícones ou mini-gráficos para cada inovação técnica, talvez com um “radar” dos diferenciais.
+
+---
+
+### Slide 7 – Caso de Uso & Cenário de Aplicação
+
+**Título**: Cenário de Aplicação – BVLOS & UTM
+**Conteúdo**:
+
+* Exemplo: operação de múltiplos drones em ambiente urbano/complexo com tráfego UTM, evento de falha de comunicação ou sensor.
+* Como o MIRF intervém: simula a falha, detecta, reconfigura missão, redistribui tarefas.
+* Benefício operacional: aumento da resiliência, menor tempo de inatividade, maior robustez.
+  **Visual**: Ilustração de drone em ambiente urbano, falha marcada, e redistribuição de missão – talvez animação simplificada ou sequência de três frames.
+
+---
+
+### Slide 8 – Status, Progresso e Próximos Passos
+
+**Título**: Progresso Atual & Roadmap
+**Conteúdo**:
+
+* Repositório disponível: README com descrição da proposta. ([GitHub][1])
+* Estado atual: módulo de software em desenvolvimento (versão de tese); validação em ambiente simulado com PlaNAR UTM.
+* Próximos passos: integração completa com MRCF, testes em cenário real ou HiL, publicação de resultados, prototipagem física (se aplicável).
+* Cronograma ou roadmap (por exemplo: Q1 2025 simulação completa; Q2 integração; Q3 testes de campo; Q4 publicação/patente).
+  **Visual**: Linha do tempo (timeline) com marcos chave.
+
+---
+
+### Slide 9 – Impacto, Mercado, Potencial de Aplicação
+
+**Título**: Impacto & Potencial de Mercado
+**Conteúdo**:
+
+* Relevância acadêmica: contribui para controle autônomo de missões UAS, resiliência, multiagentes, UTM.
+* Relevância industrial / operacional: uso em operadores de UAS, serviços UTM, defesa, logística, inspeção crítica.
+* Potencial de comercialização/licenciamento da tecnologia de reconfiguração de missão.
+* Alinhamento estratégico com regulamentação de tráfego de UAS (ex: no Brasil, projeto BR‑UTM). ([jtveigaita.github.io][2])
+  **Visual**: Gráfico de mercado de drones, UTM ou infográfico de aplicação (defesa, logística, inspeção).
+
+---
+
+### Slide 10 – Conclusão & Chamada à Ação
+
+**Título**: Conclusão & Próximos Passos para Colaboração
+**Conteúdo**:
+
+* Recapitulação breve: O que o MIRF faz, por que importa, como está conectado ao MRCF e ao PlaNAR.
+* Convite para: colaboração institucional, financiamento de protótipo ou testes de campo, parcerias acadêmicas/industriais.
+* Informação de contato: seu email, instituição, GitHub (link para o repositório).
+* Slide de “Obrigado” com logotipos (ITA, etc).
+  **Visual**: Imagem de drone ou simulação futurista + “Obrigado / Perguntas?” + QR-code para repositório, se possível.
+
+---
+
+[1]: https://github.com/JtveigaIta/mirf "GitHub - JtveigaIta/mirf: Repositório destinado ao SW gerado com a proposta de Tese do Doutorado do ITA"
+[2]: https://jtveigaita.github.io/planar/ "PlaNAR - Planador Autônomo para Ressuprimento Logístico"
+
+----------
+INSERIR NO REPO CORRETO:
+Pitch PLANAR, alinhado a PROPOSTA DE QUALIFICACAO, COMO??
+
+-----------------------------------------------------------
+CAPA: Projeto PlaNAR
+
+Planador Autônomo para Ressuprimento Logístico
+
+Duração: 6 meses
+
+Outubro de 2025
+----------------------------------------------
+1. Abertura/ Titulo Impactante (30s):
+* Nome do projeto (ex.: PLANAR - Planador para Navegação Autonoma)
+* Uma frase forte: 
+"Transformamos telemetria, missão e segurança em um único 
+cérebro operacional para sistemas remotos de alto risco."
+
+----------------------------------------------
+----------------------------------------------
+2. Resumo Executivo/ Visão Geral (1 min):
+Explique em 4 pontos:
+1. Problema central - caótico, caro, manual, risco elevado.
+2. Solução - plataforma inteligente de gestão PLANAR + módulo UTM (nao é isso ainda)
+4. Impacto esperado - redução de custos, mais segurança, automação.
+5. Aplicações - foguetes, UAS, cargas autonomas, ensaios estruturais, laboratorios, redes plug-and-play.
+
+Dica: aqui você cria o gancho emocional que prende a banca.
+
+----------------------------------------------
+----------------------------------------------
+3. Oportunidade Tecnológica e TRL Pretendido (1 min):
+
+* Mostre em que TRL o projeto está hoje (ex,: TRL 3-4)
+* Mostre onde quer chegar ao final da pesquisa (ex.: TRL 6 demonstrado em ambiente relevante)
+* Explique o salto tecnológico que o recurso de fomento torna possível.
+
+Objetivo: transmitir que você entende a trajetória completa da tecnologia
+----------------------------------------------
+----------------------------------------------
+4. Revisão Científica / Estado da Arte (1min):
+
+Em Pitch, essa parte deve ser simples, mas sólida:
+ * O que já existe no mundo (UTM internacional, ESA, sistemas distribuídos, Digital Twins)
+ * Onde os modelos atuais falham:
+	* pouca modularidade
+        * operação difícil
+ 	* não são plug-and-play
+	* pouca interoperabilidade
+	* frameworks não integrados
+* Onde o PLANAR avança:
+	* visão holística
+	* arquitetura orientada a componentes
+	* digital assets para reconfiguração
+	* automação dos testes / telemetria
+	* convergência ar-terra-epaço
+
+Objetivo: deixar claro que você está acima do estado da arte 
+----------------------------------------------
+----------------------------------------------
+5. Diferencia, Concorrência PI (1min):
+
+Explique:
+	* Quem são os concorrentes diretos/ indiretos.
+	* Qual diferencial disruptivo do PLANAR:
+	  * orquestração de alto nível
+	  * reconfiguração de ativos
+	  * UTM aplicável a naves leves / cargas
+	  * integração com sistemas de Test Bench e telemetria
+	* Se existe liberdade para operar (FTO)
+	* Estratégia de PI:
+	  * registro de software
+	  * métodos, fluxos, processos
+          * blockchain para certificações (POA, etc.)
+----------------------------------------------
+----------------------------------------------
+6. Plano de Pesquisa (2min):
+Aqui você conquista a banca com clareza de execução.
+
+Monte em três etapas:
+
+Fase 1 - Arquitetura e MVP (TRL 3 -> 4)
+   * Modelagem PFS
+   * Camadas do PLANAR
+   * Protótipo do orquestrador
+   * Simulação UTM / Digital Assets
+
+Fase 2 - Demonstrações (TRL 4 -> 5)
+   * Testes em ambiente semi-controlado
+   * Integração com telemetria real (foguetes, LASC, drones, etc)
+
+Fase 3 - Validação em Ambiente Relevante (TRL 5 -> 6)
+   * Missões reais
+   * Ensaios de testes automatizados
+   * Reconfiguração de ativos
+   * Relatórios, métricas, maturação para produto
+----------------------------------------------
+----------------------------------------------
+7. Potencial Comercial e Inovação (1min):
+
+Aqui a banca quer saber: Isso vira produto? Dá retorno?
+
+Fale sobre:
+	* Mercado-alvo:
+		* aeroespacial
+		* defesa
+		* UAS (logística, agro, inspeções)
+		* educação e laboratórios
+		* telemetria e ensaios
+	* Modelos de negócio:
+		* SaaS
+ 		* licenças institucionais
+		* kits de simulação
+		* consultoria e integração
+	* Parceiros potenciais:
+		* universidades, parques tecnológicos, laboratórios espaciais
+	* Projeção de receita (não presa número exato, apenas "comportamento").
+----------------------------------------------
+----------------------------------------------
+8. Orçamento Justificado (45s):
+Mostre:
+	* Em que o dinheiro será gasto:
+		* equipe
+		* infraestrutura de testes
+		* equipamentos
+		* desenvolvimento
+	* Justifique cada bloco.
+	* Mostre maturidade e transparência (não precisa valor em Pitch)
+----------------------------------------------
+----------------------------------------------
+9. Nossas Realizações e Contribuições:
+Conte:
+	* Quem você é
+	* Experiências prévias (telemetria, artigos, laboratórios, projetos)
+	* Competências da equipe
+	* Parceiros e co-operação
+	* Capacidade de execução
+
+Objetivo: transmitir confiança
+----------------------------------------------
+----------------------------------------------
+10. Outras Propostas Relacionadas (30s)
+Mostre: 
+	* Como este projeto não é duplicado
+	* Como se conecta com outros projetos ou ideias do ecossistema
+	* Como traz sinergia e não sobreposição
+----------------------------------------------
+----------------------------------------------
+10. Fechamento e Chamada para Ação (30s)
+Finalize com:
+	* Impacto direto do investimento
+	* O futuro possível com a tecnologia
+	* Convite para a banca apoiar o desenvolvimento
+
+Ex.: "Com o apoio desta instituição, o PLANAR se torna o primeiro 
+orquestrador brasileiro de sistemas distribuídos aeroespaciais. Um salto tecnológico que posiciona o Brasil no cenário Space 4.0"
+----------------------------------------------
+----------------------------------------------
+O Projeto PlaNAR vai além do hardware. Nossas construções atuais estabelecem uma base de conhecimento e tecnologia fundamental para o futuro do tráfego aéreo não tripulado no Brasil.
+
+01
+Mini Curso sobre UTM e UAS
+Formação essencial sobre Gerenciamento de Tráfego Aéreo Não Tripulado (UTM) e Sistemas de Aeronaves Não Tripuladas (UAS). Capacitação de profissionais e alinhamento com a regulamentação BR-UTM.
+
+02
+Artigo Científico (MRCF)
+Publicação técnica sobre o Sistema de Simulação de Drones com Multi-Agent System (MAS) e Behavior Trees (BT). Validação acadêmica e avanço na coordenação autônoma de múltiplos drones.
+
+03
+Propriedade Intelectual (MRCF)
+Registro de tecnologia (ex: algoritmos de navegação e controle) desenvolvida para o PlaNAR. Proteção e comercialização da tecnologia nacional.
+
+04
+Validação PIPE-1
+Conclusão da fase de Validação Funcional por Simulação Integrada (HiL + SiL) do design do planador. Redução de riscos e otimização do design antes da prototipagem física (PIPE-2).
+----------------------------------------------
+----------------------------------------------
+10. Próximos Passos:
+
+* Ser reconhecido como especialista em Capacitações em UTM e UAS;
+* Fornecer meios para  integrar sua tecnologia ao ecossistema BR-UTM? Agende uma consulta com nossa equipe.
+* Submissão da proposta para financiamento PIPE-2 para prototipagem e testes de voo em ambiente controlado.
+----------------------------------------------
+----------------------------------------------
+11. Parceiros:
+
+* ITA: Instituto Tecnológico de Aeronáutica - Base de excelência acadêmica e tecnológica em engenharia aeroespacial;
+* BR-UTM / DECEA: Alinhamento com o Projeto BR-UTM e o Departamento de Controle do Espaço Aéreo. Implementação a partir de 2026.
+* Aviação do Amanhã: Entidade que promove o debate e o avanço da aviação de nova geração no Brasil.
+* DECEA: Órgão regulador que define o futuro operacional de sistemas como o PlaNAR.
+----------------------------------------------
+12. Realizações:
+
+( ) Artigo MRCF
+( ) Mini Curso
+( ) Participação Ensaio II DCEA
+( ) Projeto Aviação do Amanha
+( ) Participação do III Encontro
+----------------------------------------------
+13. Entre em Contato:
+
+Tem dúvidas ou interesse em colaborar? Fale conosco!
+📍 Localização
+Incubaero - Fundação Casimiro Montenegro Filho
+DCTA, São José dos Campos - SP
+📧 Email
+contato@planar.org
+📱 Telefone
++55 (11) 99999-9999
+🌐 Redes Sociais
+LinkedIn | Twitter | GitHub
+
+==================================================================
+
 PESQUISAS 12.11.2025 (Objetivo, produzir uma linha de AÇÃO e DoE Mínimo Conceitual)
 ---
 A ultima etapa da pesquisa, dando algums passos atraz foi buscar colocar minha abordagem no contexto global:
