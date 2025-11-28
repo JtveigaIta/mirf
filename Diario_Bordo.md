@@ -1,3 +1,13 @@
+PESQUISA 28.11.2025 (Compilar os textos relevantes para o Template Overleaft da QUALIS)
+---
+Neste dia estou compilando todos os textos que estão separados entre os trabalhos do SAC, MRCF, PLANAR e outros sobre UTM e ultimos feitos sobre regulacao e arquitetura de BVLOS, nas semanas entre 18 á 28.11
+
+Objetivo específico de hoje:
+--
+ ( ) Inserir todos os textos no Overleaft
+ ( ) Após os textos, inserir no prisma para monitorar revisoes e inserir no github, em seguida iniciar a lapidação da QUALIS
+ ( ) Após lapidar, finalizar os SLIDs e enviar para os Orientadores.
+
 PESQUISAS 18.11.2025 (Objetivo, planejamento para Apresentacao e Estruturacao da QUALIS)
 ---
 Nesse dia, eu fiz os textos tanto para apresentação dos PITCH Planar, quanto PITCH da QUALIS. Após estes planos, tambem comecei o template em .ppt para QUALIS, porem resolvi rodar o exemplo fornecido pelo programa, e tambem, começar o preenchimento do docuemnto FAPESP. Algumas coisas que pensei em conjunto foi como divulgar e escolha de busca de alunos e orientação, para meta de gerar dez trabalhos relacionados em 2026.
