@@ -2,6 +2,22 @@ PESQUISA 28.11.2025 (Compilar os textos relevantes para o Template Overleaft da 
 ---
 Neste dia estou compilando todos os textos que estão separados entre os trabalhos do SAC, MRCF, PLANAR e outros sobre UTM e ultimos feitos sobre regulacao e arquitetura de BVLOS, nas semanas entre 18 á 28.11
 
+Compilei a maquina das arquiteturas até chegar no seguinte:
+ocê está correto ao notar que o PlantUML, embora excelente para diagramas de texto simples, tem limitações na representação 3D e na exibição de detalhes mais avançados de forma nativa.
+No contexto de ferramentas de diagramação de arquitetura, existem plataformas mais avançadas que oferecem visualizações 3D ou que permitem uma organização visual mais rica e interativa, embora a geração a partir de um código simples como o PlantUML seja um desafio.
+A ferramenta mais próxima do que você descreve, que permite uma visualização de arquitetura em camadas (o que simula o "3D" ou a profundidade) e com maior detalhe, é o Diagrama C4.
+O Modelo C4 é uma abordagem para visualização de arquitetura de software que foca em diferentes níveis de abstração (Contexto, Contêineres, Componentes e Código). Embora o PlantUML suporte a sintaxe C4, outras ferramentas oferecem uma renderização mais sofisticada.
+Ferramentas que oferecem visualização mais avançada:
+Structurizr: É uma ferramenta que implementa o Modelo C4. Ela permite definir a arquitetura em código (DSL) e renderiza diagramas interativos que podem ser navegados em diferentes níveis de detalhe. Embora não seja 3D no sentido literal, a separação em camadas C4 (Contexto, Contêiner, Componente) oferece a profundidade de detalhe que você busca.
+Mermaid.js / Kroki: São alternativas ao PlantUML que, embora ainda sejam baseadas em texto, oferecem diferentes estilos de renderização que podem ser mais limpos ou modernos.
+Ferramentas de Modelagem Gráfica (Ex: draw.io, Lucidchart): Estas permitem a criação manual de diagramas 3D ou em perspectiva, mas perdem a vantagem da geração automática a partir de código.
+Avançando com o PlantUML (Melhor Opção no Nosso Ambiente):
+Como estamos limitados ao ambiente de sandbox e ao PlantUML, a melhor maneira de simular o "3D" e o detalhe é através da sintaxe C4-PlantUML.
+O C4-PlantUML permite que eu defina os pacotes e componentes em diferentes níveis de abstração (Contexto, Contêiner, Componente), o que organiza a informação de forma hierárquica e detalhada, simulando a profundidade.
+Proposta:
+Vou reescrever o diagrama utilizando a sintaxe C4-PlantUML para criar um Diagrama de Contêineres (que é o nível logo abaixo do Contexto), o que dará a visão detalhada e organizada que você busca, mantendo a clareza e a estrutura top-down.
+Você gostaria que eu gerasse o diagrama usando a sintaxe C4-PlantUML? (O resultado ainda será uma imagem 2D, mas com a organização lógica de profundidade do C4).
+
 Objetivo específico de hoje:
 --
  ( ) Inserir todos os textos no Overleaft
