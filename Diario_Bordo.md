@@ -1,5 +1,1055 @@
 PESQUISA 28.11.2025 (Compilar os textos relevantes para o Template Overleaft da QUALIS)
 ---
+Basicamente o compilado da secao proposta que fiz hoje:
+
+\chapter{Research Proposal (Work Plan and Timeline)}
+
+%\section{Detailed Dissertation Proposal}
+%Com base na lacuna de pesquisa que eu estabeleci no capítulo anterior, vou detalhar aqui exatamente o que farei no restante do meu mestrado. Vou apresentar minha proposta (de solução, framework, método, etc.) para preencher essa lacuna.
+
+%\section{Future Research Methodology}
+%Aqui, eu vou descrever a metodologia que usarei para desenvolver e avaliar minha proposta. Esta pode ser, por exemplo, Design Science Research, um estudo de caso, um experimento, etc.
+
+%\section{Work Plan and Timeline}
+%Vou apresentar um cronograma detalhado com todas as etapas futuras até a minha defesa. Um Gráfico de Gantt eu curto bastante e acho ideal para esta seção, para visualizar as atividades e os prazos.
+
+%\section{Expected Contributions}
+%Para finalizar, vou listar de forma clara e objetiva quais serão as contribuições originais esperadas do meu trabalho para a academia e/ou para a indústria.
+%OS ITENS ACIMA SAO PARA ADEQUAR
+
+\subsection{Documentos Elaborados e Artefatos de Arquitetura}
+
+Foram desenvolvidas duas arquiteturas de software para o Sistema de Simulação UTM, conforme os módulos e requisitos fornecidos, além da análise de alinhamento com recomendações internacionais (ICAO, CANOPs e FAA). Os resultados encontram-se organizados nos seguintes anexos:
+
+\begin{itemize}
+    \item \textbf{Arquitetura de Software para Sistema de Simulação UTM -- Contexto Geral} (\textit{arquitetura\_geral.md}):  
+    Documento que descreve a arquitetura em alto nível, com foco na separação de responsabilidades entre os módulos principais do sistema.
+    
+    \item \textbf{Código PlantUML -- Arquitetura Geral} (\textit{arquitetura\_geral\_plantuml.txt}):  
+    Código-fonte utilizado para a visualização do diagrama de componentes relacionados ao contexto geral da arquitetura.
+    
+    \item \textbf{Arquitetura de Software para Sistema de Simulação UTM -- Detalhada (Nível de Implementação)} (\textit{arquitetura\_detalhada.md}):  
+    Documento que apresenta a arquitetura em nível de microsserviços, módulos internos e componentes do motor de simulação.
+    
+    \item \textbf{Código PlantUML -- Arquitetura Detalhada} (\textit{arquitetura\_detalhada\_plantuml.txt}):  
+    Código para geração do diagrama de componentes detalhado correspondente ao nível de implementação.
+    
+    \item \textbf{Análise de Alinhamento com Normas Internacionais} (\textit{analise\_conformidade.md}):  
+    Documento que descreve como a arquitetura proposta se alinha às normas e diretrizes da ICAO, CANOPs e FAA para UTM, destacando também os elementos que permanecem fora desse escopo por se tratarem de funcionalidades específicas do ambiente de simulação.
+\end{itemize}
+
+\section{Arquitetura de Software para Sistema de Simulação UTM -- Contexto Geral}
+
+A arquitetura de contexto geral do sistema de simulação UTM (Unmanned Aircraft System Traffic Management) é concebida como um sistema modular e distribuído, com a separação clara das responsabilidades de \textbf{configuração}, \textbf{execução}, \textbf{visualização} e \textbf{persistência} da simulação.
+
+\subsection{Visão Geral da Arquitetura}
+
+O modelo arquitetural segue o paradigma de Arquitetura Orientada a Serviços (Service-Oriented Architecture -- SOA) ou microserviços, essencial para garantir \textbf{escalabilidade}, \textbf{resiliência} e \textbf{fidelidade arquitetural} em relação ao ambiente real de UTM, intrinsicamente distribuído~\cite{ref1}.
+
+\begin{table}[h!]
+\centering
+\caption{Principais módulos da arquitetura e seus alinhamentos com requisitos}
+\begin{tabular}{|p{4cm}|p{6cm}|p{4cm}|}
+\hline
+\textbf{Módulo Principal} & \textbf{Responsabilidade Primária} & \textbf{Alinhamento com Requisitos (Exemplos)} \\
+\hline
+
+\textbf{Interface de Visualização (UI/UX)} &
+Interação Humano-Sistema; visualização geoespacial 4D; manutenção da consciência situacional operacional. &
+1, 25, 26, 92, 93, 95, 96, 97, 98, 100, 140, 141, 150 \\
+\hline
+
+\textbf{Gestor de Cenários / Configurador} &
+Criação, parametrização e gestão completa do ciclo de vida dos cenários de simulação. &
+2, 6, 7, 10, 12, 14, 17, 18, 22, 23, 35, 36, 40, 44, 45, 47, 49, 52, 55, 56, 58, 59, 137, 139, 153, 154, 167, 168 \\
+\hline
+
+\textbf{Motor de Simulação / Framework} &
+Núcleo de execução da simulação; aplicação de regras físicas, regulatórias e táticas; execução em tempo próximo ao real. &
+5, 35, 36, 44, 52, 55, 81, 82, 105, 148, 160, 161, 162 \\
+\hline
+
+\textbf{Infraestrutura de Serviços / Backend} &
+Fornecimento de APIs internas e externas; gestão de infraestrutura distribuída; suporte a execução simultânea e escalabilidade. &
+15, 24, 38, 85, 86, 88, 89, 91, 138, 160, 161, 162, 163 \\
+\hline
+
+\textbf{Banco de Dados / Persistência} &
+Armazenamento de cenários, resultados, logs, métricas e histórico operacional. &
+31, 34, 144, 160, 161, 162 \\
+\hline
+
+\textbf{Gerador de Relatórios e Dashboards} &
+Consolidação de métricas; relatórios de não conformidade; dashboards estratégicos para análise. &
+4, 25, 27, 32, 33, 41, 42, 69, 141 \\
+\hline
+
+\textbf{Carregamento e Integração de Entidades} &
+Interoperabilidade com APIs externas, DSS e provedores; importação de entidades e restrições operacionais. &
+3, 9, 37, 41, 42, 107, 164, 165 \\
+\hline
+
+\textbf{Gestão de Usuários e Acesso} &
+Autenticação, autorização, perfis de usuário e trilhas de auditoria. &
+1, 16, 29, 30, 39, 102, 103, 104, 112, 142, 143, 151, 152 \\
+\hline
+
+\end{tabular}
+\end{table}
+
+\section{Diagrama de Componentes (PlantUML)}
+
+O diagrama de componentes a seguir ilustra as interações de alto nível entre os módulos.
+
+%\begin{lstlisting}[language={},caption={Arquitetura de Software - Contexto Geral (Simulação UTM)}]
+%@startuml
+%skinparam componentStyle rectangle
+%skinparam monochrome true
+
+%title Arquitetura de Software - Contexto Geral (Simulação UTM)
+
+%' Subsistemas Principais
+%component "Interface de Visualização (UI/UX)" as UI
+%component "Gestor de Cenários / Configurador" as SCENARIO_MANAGER
+%component "Motor de Simulação / Framework" as SIM_ENGINE
+%component "Infraestrutura de Serviços / Backend" as BACKEND
+%component "Banco de Dados / Persistência" as DB
+%component "Gerador de Relatórios e Dashboards" as REPORT_GEN
+%component "Carregamento e Integração de Entidades" as DATA_INTEGRATION
+%component "Gestão de Usuários e Acesso" as USER_MANAGER
+
+%' Relações
+%UI --> SCENARIO_MANAGER : Configuração de Cenários
+%UI --> SIM_ENGINE : Visualização em Tempo Real
+%UI --> REPORT_GEN : Visualização de Resultados
+%UI --> USER_MANAGER : Autenticação e Gestão de Perfil
+
+%SCENARIO_MANAGER --> SIM_ENGINE : Parâmetros e Início da Simulação
+%SCENARIO_MANAGER --> DB : Persistência de Cenários
+
+%SIM_ENGINE --> DATA_INTEGRATION : Carregamento de Dados Externos
+%SIM_ENGINE --> DB : Persistência de Logs e Resultados
+%SIM_ENGINE --> REPORT_GEN : Geração de Métricas
+
+%BACKEND --> SIM_ENGINE : Execução Distribuída
+%BACKEND --> DB : Acesso a Dados
+%BACKEND --> DATA_INTEGRATION : Serviços de API
+
+%DATA_INTEGRATION --> BACKEND : Serviços de API
+%DATA_INTEGRATION --> DB : Dados de Entidades
+
+%REPORT_GEN --> DB : Consulta de Resultados Históricos
+
+%USER_MANAGER --> BACKEND : Controle de Acesso
+
+%' Módulos de Suporte (Aspectos Transversais)
+%package "Segurança e Conformidade" {
+%  [Módulo de Segurança] as SECURITY
+%}
+%package "Planejamento Estratégico e Análise" {
+%  [Módulo de Análise] as ANALYSIS
+%}
+%package "Testes, Certificação e Auditoria" {
+%  [Módulo de Testes] as TESTING
+%}
+
+%SIM_ENGINE ..> SECURITY : Aplicação de Regras
+%BACKEND ..> SECURITY : Autenticação/Autorização
+%DB ..> SECURITY : Proteção de Dados
+
+%REPORT_GEN ..> ANALYSIS : Consolidação de Dados
+%SIM_ENGINE ..> ANALYSIS : Dados para Avaliação
+
+%SIM_ENGINE ..> TESTING : Logs e Resultados para Validação
+
+%@enduml
+%\end{lstlisting}
+
+\subsection*{Referências}
+
+[1] FAA. \textit{Unmanned Aircraft System (UAS) Traffic Management (UTM) ConOps V2.0}. Documento que descreve a arquitetura e serviços do UTM.
+
+\section{Análise de Alinhamento com Normas Internacionais (ICAO, CANOPs, FAA)}
+
+A arquitetura de simulação proposta foi desenhada para refletir os princípios fundamentais de um sistema UTM, conforme estabelecido por organizações reguladoras e de padronização como a Organização da Aviação Civil Internacional (ICAO), a Administração Federal de Aviação (FAA) e o CANOPs (embora o CANOPs seja um conceito mais amplo, seus princípios de segurança e interoperabilidade são aplicáveis).
+
+\subsection{Alinhamento com Recomendações Internacionais}
+
+O alinhamento da arquitetura com as normas internacionais é forte, especialmente nos aspectos de distribuição de serviços, interoperabilidade e segurança.
+
+\begin{table}[h!]
+\centering
+\caption{Alinhamento da Arquitetura com Normas Internacionais (ICAO, FAA, CANOPs)}
+\begin{tabular}{|p{3.3cm}|p{2.5cm}|p{8.5cm}|}
+\hline
+\textbf{Aspecto da Arquitetura} & 
+\textbf{Alinhamento} & 
+\textbf{Justificativa} \\ 
+\hline
+
+Arquitetura Distribuída (Microsserviços) 
+& Alinhado 
+& A ICAO e a FAA definem que o UTM deve operar como um ecossistema distribuído, com múltiplos provedores (USS) integrados por um Sistema de Informação Comum (CIS). A arquitetura proposta, com backend distribuído e APIs internas/externas, simula essa estrutura. Os Requisitos 88 e 89 reforçam a necessidade de fidelidade arquitetural com o UTM real. \\
+\hline
+
+Interoperabilidade
+& Alinhado
+& A troca de dados padronizada entre atores (USS, Autoridade, Operadores) é um dos pilares das normas internacionais. O módulo de Carregamento e Integração de Entidades, junto ao serviço de dados, simula APIs compatíveis com padrões como ASTM F3411. Os Requisitos 3, 9, 37 e 164 tratam diretamente dessa necessidade. \\
+\hline
+
+Gestão de Conflitos (CDR)
+& Alinhado
+& O serviço de \textit{Conflict Detection \& Resolution} simula o Desconflito Tático (Requisito 81), um dos principais serviços de segurança presentes nas normas da ICAO e FAA. A simulação de regras de separação e mitigação de conflitos está alinhada com os requisitos de segurança operacional. \\
+\hline
+
+Segurança e Auditoria
+& Alinhado
+& O sistema contempla autenticação, autorização e rastreabilidade por meio dos módulos de Segurança, Gestão de Usuários e Auditoria. Esses mecanismos atendem às recomendações internacionais para segurança cibernética e operacional (Requisitos 39, 108, 113). \\
+\hline
+
+Visualização Geoespacial (4D)
+& Alinhado
+& A visualização espaço-temporal (4D) é essencial para consciência situacional e tomada de decisão em UTM. O módulo de UI/UX e o suporte à coleta de métricas 4D (Requisito 134) atendem às recomendações da ICAO e FAA. \\
+\hline
+
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Partes Fora do Escopo Direto das Normas Internacionais}
+\begin{tabular}{|p{3.5cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Aspecto da Arquitetura} &
+\textbf{Relação com Normas Internacionais} &
+\textbf{Justificativa} \\
+\hline
+
+Motor de Simulação (Core) 
+& Fora do escopo direto 
+& As normas ICAO/FAA definem os serviços UTM, mas não especificam como um motor de simulação deve ser implementado. O \textit{Scheduler} e o \textit{Rule Engine} são estruturas internas necessárias para execução em tempo próximo ao real (Requisito 35), mas não constituem serviços UTM definidos nas normas internacionais. \\
+\hline
+
+Gerador de Relatórios e Dashboards 
+& Fora do escopo direto 
+& As normas exigem registro e rastreabilidade de dados, mas não definem formatos de dashboards ou relatórios analíticos. O Módulo de Análise Estratégica (Requisitos 11, 124, 125) e o Gerador de Relatórios são ferramentas específicas do simulador, destinadas à avaliação e tomada de decisão, extrapolando os requisitos operacionais do UTM. \\
+\hline
+
+Módulo de Testes de Saturação 
+& Fora do escopo direto 
+& Embora as normas estabeleçam que o sistema deve ser seguro e robusto, o módulo de testes é uma ferramenta própria do simulador. O Requisito 121 (Avaliação de Saturação do Espaço Aéreo) representa um objetivo analítico da simulação, não um serviço UTM. O módulo que suporta essa função é uma ferramenta de engenharia e validação do sistema. \\
+\hline
+
+\end{tabular}
+\end{table}
+
+\section*{Resumo do Alinhamento}
+
+Em resumo, a arquitetura proposta adota a estrutura de serviços e a filosofia de interoperabilidade do UTM, mantendo forte alinhamento com as recomendações internacionais. Ao mesmo tempo, o \textbf{Motor de Simulação} e os \textbf{Módulos de Análise} representam uma camada adicional de ferramentas para avaliação, própria de um sistema de simulação, e portanto \textit{fora do escopo direto} das normas operacionais estabelecidas por ICAO, FAA e documentos associados.
+
+\section*{Referências}
+
+\begin{enumerate}
+    \item ICAO. \textit{UTM Guidance}. Documento que fornece orientação sobre a gestão do tráfego de UAS.
+    \item FAA. \textit{Unmanned Aircraft System (UAS) Traffic Management (UTM) ConOps V2.0}.
+    \item FAA. \textit{Uncrewed Aircraft Systems (UAS) Traffic Management (UTM) Pilot Program (UPP) Final Report}.
+\end{enumerate}
+
+\section*{Atores do Sistema de Simulação UTM}
+
+Com base nos textos dos módulos, requisitos e nas arquiteturas de software elaboradas, os atores do sistema de simulação UTM foram identificados e classificados em duas categorias principais: \textbf{Atores Humanos (Usuários)} e \textbf{Atores de Sistema (Entidades)}. 
+
+O documento anexo, \textit{Atores do Sistema de Simulação UTM}, detalha cada ator, seu papel no sistema, os módulos de interação primária e os requisitos associados.
+
+\subsection*{Resumo dos Principais Atores}
+
+\subsubsection*{Atores Humanos}
+\begin{itemize}
+    \item \textbf{Analista de Espaço Aéreo / Regulador}: Responsável pela configuração de cenários complexos e pela análise estratégica.
+    \item \textbf{Operador de Simulação / Engenheiro de Testes}: Responsável pela execução técnica da simulação, testes de saturação e processos de validação.
+    \item \textbf{Usuário de Consulta / Observador}: Focado na visualização de resultados, métricas e dashboards.
+    \item \textbf{Administrador do Sistema}: Atua na gestão de acesso, segurança e governança operacional do sistema.
+\end{itemize}
+
+\subsubsection*{Atores de Sistema}
+\begin{itemize}
+    \item \textbf{Provedores de Serviço UTM (USS)}: Entidades simuladas que interagem diretamente com o Motor de Simulação.
+    \item \textbf{Sistemas Externos / DSS}: Fontes de dados externas integradas por meio de APIs.
+    \item \textbf{Entidades de Simulação (Aeronaves/Drones)}: Objetos primários representados e manipulados durante a simulação.
+    \item \textbf{Módulo de Análise Estratégica}: Componente interno que atua como ator ao produzir insights e outputs analíticos.
+\end{itemize}
+
+ste documento apresenta a contextualização e o enquadramento técnico-normativo do \textbf{Sistema de Gerenciamento de Tráfego de Aeronaves Não Tripuladas (UTM) Global}, cujo cenário de aplicação inicial é o Brasil, mas cuja concepção segue as diretrizes internacionais mais avançadas em gestão de tráfego aéreo distribuído. 
+
+O objetivo central é garantir uma solução robusta, interoperável e aderente a padrões globais, assegurando escalabilidade, certificabilidade e integração futura com infraestruturas internacionais. O projeto reconhece a transição do modelo tradicional e centralizado de \textit{Air Traffic Management (ATM)} para o paradigma distribuído, baseado em risco, de \textit{Unmanned Traffic Management (UTM)}, conforme preconizado por organismos como a \textit{ICAO}, \textit{FAA/NASA}, \textit{EASA} e \textit{JARUS}.
+
+% ------------------------------------------------------------
+\section{Referenciais Normativos e Diretrizes Internacionais}
+
+A definição dos requisitos do simulador baseia-se em um conjunto consolidado de normas e diretrizes internacionais, que visam assegur a compatibilidade e a interoperabilidade do UTM brasileiro com o ecossistema global.
+
+\begin{table}[H]
+\centering
+\caption{Referenciais normativos e diretrizes internacionais considerados.}
+\label{tab:normas_internacionais}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{6pt}
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{Organismo / Documento} & \textbf{Descrição e Relevância para o Projeto} & \textbf{Referência Original} \\
+\hline
+\textbf{ICAO} & Diretrizes globais para harmonização entre ATM e UTM. O sistema deve seguir o \textit{UTM Framework} (Edição 4), assegurando aceitação internacional. & \cite{icao2019utmframework} \\
+\hline
+\textbf{FAA / NASA} & Arquitetura de referência baseada no \textit{UTM ConOps v2.0} e no \textit{Flight Information Management System (FIMS)}, modelos centrais para interoperabilidade e supervisão digital. & [\cite{faa_conops}][\cite{faa_utm}] \\
+\hline
+\textbf{EASA (U-space)} & Regulamento europeu (EU) 2021/664, com ênfase na autonomia operacional dos provedores de serviço e serviços essenciais do U-space. & [\cite{eu2021uSpace664}] \\
+\hline
+\textbf{ASTM F3448 / F3548} & Especificações para interoperabilidade e provedores suplementares de dados e serviços. Fundamenta o intercâmbio entre USSs e autoridades. & [\cite{astmF3448}][\cite{astm_f3548_21}] \\
+\hline
+\textbf{JARUS} & Diretrizes de segurança, avaliação de risco e definição de níveis de garantia (DAL) aplicáveis a sistemas UAS. & [\cite{jarusSORA}] \\
+\hline
+\end{tabularx}
+\end{table}
+
+% ------------------------------------------------------------
+\section{Estrutura de Atores do Sistema}
+
+O ecossistema UTM é composto por atores que interagem em um modelo distribuído de responsabilidade, interoperabilidade e supervisão digital. A Tabela~\ref{tab:atores_sistema} apresenta os principais papéis e responsabilidades.
+
+\begin{table}[H]
+\centering
+\caption{Principais atores e funções no Sistema UTM}
+\label{tab:atores_sistema}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Ator} & \textbf{Papel e Responsabilidade} \\
+\hline
+\textbf{Autoridade Aeronáutica (ANSP/DECEA)} & Supervisão e regulação; definição de restrições estáticas e dinâmicas e manutenção da responsabilidade final pela segurança operacional. \\
+\hline
+\textbf{Operadores de Voo (UAS Operators)} & Planejamento, execução e conformidade das missões UAS, em interação direta com os provedores de serviço (USS). \\
+\hline
+\textbf{Provedores de Serviço UTM (USS)} & Coordenação tática, desconflito e sincronização de dados de intenção e posição em tempo real; execução dos serviços essenciais de U-space. \\
+\hline
+\textbf{Provedores de Informações Suplementares (SIPs)} & Fornecimento de dados críticos (meteorologia, topografia, multidões, emergências) que alimentam a operação dos USSs. \\
+\hline
+\textbf{FIMS (\emph{Flight Information Management System})} & Camada digital de supervisão e mediação entre USSs e Autoridade Aeronáutica, gerenciando planos de voo e restrições dinâmicas. \\
+\hline
+\end{tabularx}
+\end{table}
+
+% ------------------------------------------------------------
+\section{Categorias de Requisitos e Perfis de Entrevistas}
+
+Durante a elicitação dos requisitos, foram definidos diferentes níveis de análise, conforme a natureza dos requisitos e os perfis de especialistas entrevistados.
+
+\begin{table}[H]
+\centering
+\caption{Categorias de requisitos e perfis de contribuição.}
+\label{tab:categorias_requisitos}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Categoria} & \textbf{Descrição e Origem} \\
+\hline
+\textbf{Requisitos de Negócio (RN)} & Derivados das entrevistas com gestores de projeto e autoridades regulatórias; refletem os objetivos estratégicos e operacionais do sistema. \\
+\hline
+\textbf{Requisitos de Arquitetura (RA)} & Originados da análise de padrões técnicos (FAA/NASA, ASTM, EASA); descrevem a estrutura e as interfaces do sistema. \\
+\hline
+\textbf{Requisitos de Processo (RP)} & Associados à engenharia de sistemas e certificação; definidos a partir de práticas recomendadas (DOORS, LDRA, Rapita). \\
+\hline
+\end{tabularx}
+\end{table}
+
+Os perfis de especialistas entrevistados incluem representantes de três grupos principais:  
+(i) \textit{Autoridade e Fiscalização} (DECEA, ANAC),  
+(ii) \textit{Desenvolvedores e Integradores de Sistemas}, e  
+(iii) \textit{Operadores e Pesquisadores} em UAS e UTM.  
+Essa divisão permitiu consolidar perspectivas complementares sobre requisitos, desafios e aderência normativa.
+
+% ------------------------------------------------------------
+\section{Integração com Normas e Estrutura Hierárquica}
+
+Cada subdivisão de requisitos do UTM Global foi estruturada para garantir aderência direta aos referenciais normativos apresentados na Tabela~\ref{tab:normas_internacionais}.  
+A Tabela~\ref{tab:enquadramento_normativo} mostra a relação entre as categorias de requisitos e os padrões que as sustentam.
+
+\begin{table}[H]
+\centering
+\caption{Enquadramento das categorias de requisitos em normas e diretrizes internacionais.}
+\label{tab:enquadramento_normativo}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{6pt}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Categoria de Requisito} & \textbf{Normas e Diretrizes Associadas} \\
+\hline
+Requisitos de Negócio (RN) & ICAO UTM Framework; FAA UTM ConOps v2.0; EASA U-space (Reg. EU 2021/664). \\
+\hline
+Requisitos de Arquitetura (RA) & FAA/NASA FIMS; ASTM F3448 e F3548; Open UTM; InterUSS Foundation. \\
+\hline
+Requisitos de Processo (RP) & JARUS (metodologia de risco e segurança); ferramentas de engenharia de sistemas (DOORS, Rapita, LDRA). \\
+\hline
+\end{tabularx}
+\end{table}
+
+Esta estrutura visa propiciar a rastreabilidade vertical dos requisitos — do nível conceitual (normativo) ao nível de sistema (implementação e verificação) — alinhando o projeto às boas práticas internacionais de engenharia de sistemas aplicadas à aviação não tripulada.
+
+Este documento apresenta a contextualização e o enquadramento técnico-normativo do Sistema de Simulação UTM, com foco nas necessidades e diretrizes do ecossistema brasileiro de Gerenciamento de Tráfego de Aeronaves Não Tripuladas (BR-UTM).
+
+O objetivo central é garantir uma solução robusta e aderente aos processos e à arquitetura de comunicação estabelecida no Brasil, utilizando as diretrizes internacionais (ICAO, FAA) como inspiração e referencial de boas práticas, mas priorizando a fidelidade arquitetural e as necessidades apontadas pelos especialistas locais.
+
+\section{Enquadramento Normativo e Foco Local}
+
+A definição dos requisitos do simulador baseia-se nas diretrizes estabelecidas pelos especialistas brasileiros, mas reconhece a importância de se inspirar em padrões globais para garantir a evolução e a interoperabilidade futura.
+
+\subsection*{Referências}
+\begin{enumerate}
+    \item ICAO. UTM Guidance. Documento que fornece orientação sobre a gestão do tráfego de UAS.
+    \item FAA. Unmanned Aircraft System (UAS) Traffic Management (UTM) ConOps V2.0.
+    \item FAA. Uncrewed Aircraft Systems (UAS) Traffic Management (UTM) Pilot Program (UPP) Final Report.
+\end{enumerate}
+
+\begin{table}[h!]
+\centering
+\caption{Comparação entre referenciais internacionais e foco revisado para o BR-UTM}
+\begin{tabular}{|p{3.3cm}|p{5.2cm}|p{6cm}|}
+\hline
+\textbf{Referencial} & \textbf{Foco Original (Global)} & \textbf{Foco Revisado (BR-UTM)} \\ \hline
+
+ICAO UTM Framework &
+Diretrizes globais para harmonização entre ATM e UTM. &
+\textbf{Inspiração e Boas Práticas}: Base conceitual para o modelo distribuído e definição de serviços essenciais (ex.: desconflito, informações de voo). \\ \hline
+
+FAA / NASA (ConOps, FIMS) &
+Arquitetura de referência baseada no UTM ConOps v2.0 e no FIMS. &
+\textbf{Referência Arquitetural}: Guia para concepção da arquitetura de serviços distribuídos, priorizando aderência à arquitetura de comunicação do BR-UTM (Requisitos 85, 89). \\ \hline
+
+ASTM F3448 / F3548 &
+Especificações para interoperabilidade e provedores suplementares de dados. &
+\textbf{Interoperabilidade Lógica}: Definição dos padrões de troca de dados e APIs do simulador, refletindo a interoperabilidade entre Provedores e Autoridades no contexto brasileiro. \\ \hline
+
+JARUS &
+Diretrizes de segurança, avaliação de risco e níveis de garantia (DAL). &
+\textbf{Metodologia de Risco}: Base para análise de risco e avaliação de segurança operacional nos cenários simulados. \\ \hline
+
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Estrutura de Atores Prioritária no Contexto BR-UTM}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Ator} & \textbf{Papel e Responsabilidade no Contexto da Simulação} \\ \hline
+
+Autoridade Aeronáutica (ANSP/DECEA) &
+Ator principal responsável por definir restrições, supervisionar a conformidade regulatória e analisar os resultados da simulação. \\ \hline
+
+Provedores de Serviço UTM (USS) &
+Entidades simuladas responsáveis pela coordenação tática, desconflito e gerenciamento operacional, sendo o foco principal da avaliação de desempenho e comportamento. \\ \hline
+
+Operadores de Voo (UAS Operators) &
+Entidades simuladas que interagem com os USSs, representando a demanda de tráfego e a execução de missões. \\ \hline
+
+Provedores de Informações Suplementares (SIPs) &
+Fontes de dados externas — simuladas ou integradas — que fornecem informações críticas para a execução e a consistência dos cenários. \\ \hline
+
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Categorias de Requisitos e Origem Local}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Categoria} & \textbf{Descrição e Origem} \\ \hline
+
+Requisitos de Negócio (RN) &
+Derivados das entrevistas com gestores de projeto e autoridades regulatórias brasileiras; refletem os objetivos estratégicos e operacionais do sistema no contexto do BR-UTM. \\ \hline
+
+Requisitos de Arquitetura (RA) &
+Originados da análise da arquitetura de comunicação do BR-UTM e de padrões técnicos internacionais (ICAO, FAA, ASTM) utilizados como referência para garantir a fidelidade da simulação. \\ \hline
+
+Requisitos de Processo (RP) &
+Associados à engenharia de sistemas, testes e certificação; definidos a partir de práticas recomendadas para assegurar robustez, verificabilidade e validade dos resultados da simulação. \\ \hline
+
+\end{tabular}
+\end{table}
+
+\subsection{Conclusão do Enquadramento}
+
+Esta estrutura visa propiciar a rastreabilidade dos requisitos, alinhando o projeto às necessidades reais e imediatas dos especialistas brasileiros, ao mesmo tempo em que mantém a coerência com os princípios de um sistema UTM distribuído e seguro, conforme a inspiração das diretrizes internacionais. O foco é na aplicabilidade prática e na validação de cenários relevantes para a evolução do gerenciamento de tráfego não tripulado no Brasil.
+
+\subsection{Arquitetura Modular e Priorização para o MVP}
+
+A arquitetura modular do Sistema de Simulação UTM foi concebida para permitir extensibilidade, independência entre componentes e capacidade de execução em escala. A estrutura proposta divide o sistema em módulos especializados, que podem ser ativados, combinados e avaliados de forma isolada ou integrada. Para demonstrar rapidamente valor operacional e aderência aos requisitos de especialistas — especialmente no contexto militar — é necessário priorizar um conjunto mínimo de módulos que viabilizem campanhas de teste robustas e auditáveis.
+
+\subsection{Campaign Orchestrator (Prioridade Máxima)
+
+O Campaign Orchestrator é o núcleo operacional do simulador no que se refere à execução massiva de experiências. Ele controla o disparo, agendamento e paralelização de cenários por meio de um mecanismo de jobs associado a um worker pool, permitindo que milhares de execuções sejam processadas em lote. Sua capacidade de replay garante rastreabilidade e repetibilidade dos experimentos, fundamentais para inspeção regulatória e auditoria técnica.
+Esse módulo fornece a espinha dorsal da simulação e deve ser implementado primeiro para viabilizar o restante dos testes.
+
+\subsection{Traffic Synthesizer com Perfis Militares e Ameaças}
+
+O gerador de tráfego é responsável pela criação de missões, rotas, eventos e comportamentos plausíveis. Para uso no contexto militar, é essencial que o módulo suporte perfis especiais, como aeronaves kamikaze, comportamentos de spoofing ou jamming, formações coordenadas e tráfego hostil adversarial.
+Esse módulo alimenta o motor de simulação com estímulos ricos, permitindo avaliar resiliência do UTM e respostas do sistema em cenários extremos.
+
+\subsection{Conflict Detection & Resolution (CDR) Instrumentado}
+
+O módulo de CDR representa um dos pilares da arquitetura UTM e deve ser completamente instrumentado para registrar latência, estado interno, decisões e justificativas. Ele deve garantir: detecção de conflitos com medição de atraso, resolução automática com diferentes estratégias, suporte a operador no ciclo (man-in-the-loop). Os principais KPIs derivados deste módulo — T_detect, T_resolve e success_rate — são fundamentais para demonstrar conformidade com requisitos internacionais.
+
+\subsection{Decision Support System (DSS) Mínimo}
+
+O DSS atua como uma camada inteligente de suporte à decisão, combinando um rule engine configurável com um risk scorer baseado em ML. A função desse módulo é produzir recomendações explicadas de manobras ou alternativas de desconflito, justificando cada ação.
+Este componente aproxima a simulação de um ambiente operacional onde decisões precisam ser rastreáveis e justificáveis perante autoridades.
+
+\subsection{Provider Federation Manager}
+
+Este módulo simula o comportamento de múltiplos USSPs com SLAs distintos e políticas próprias de priorização de tráfego. Ele permite testar interações federadas, troca indireta de informações e interoperabilidade entre provedores — aspectos essenciais do BR-UTM.
+A federação de provedores é crítica para analisar gargalos, conflitos de estratégia e comportamento cooperativo ou competitivo.
+
+\subsection{Forensics Store e Evidence Generator (Pacotes SORA)}
+
+A camada de forense garante integridade e verificabilidade dos resultados de cada execução. Esse componente gera evidências criptograficamente assinadas (per-run packages) contendo logs, estados, métricas e trilhas de auditoria — seguindo princípios do SORA.
+Este módulo é indispensável para avaliações regulatórias e certificação de cenários de risco.
+
+\subsection{Test Suites Regulamentares}
+
+Um conjunto de testes padronizados deve ser incorporado ao simulador, incluindo: conflict primitives, handover, perda de comunicação, falhas GNSS. Esses cenários refletem diretrizes da ICAO para testes em campo e garantem que a simulação respeite eventos críticos previstos pelo UTM.
+
+\subsection{KPIs and SLA Dashboard + Exportação}
+
+Por fim, o dashboard agrega métricas de campanhas, SLAs e KPIs operacionais. Deve suportar exportação em CSV, PDF e compilação de pacotes de submissão para entidades reguladoras.
+Esse módulo fecha o ciclo de avaliação, fornecendo ao especialista uma visão consolidada de desempenho, falhas e tendências.
+
+\subsection{Métricas e KPIs Recomendados para a Arquitetura do Simulador}
+
+Para que o simulador opere como uma plataforma confiável de avaliação técnica, ele deve medir e registrar um conjunto consistente de métricas que reflitam eficácia, segurança e desempenho do sistema.
+
+\subsection{Taxa de Detecção de Conflito (TPR)}
+
+Reflete a eficiência do módulo de CDR na identificação de eventos perigosos. É a razão entre conflitos detectados e conflitos injetados. Criticamente importante para avaliar a qualidade de algoritmos e SLAs.
+
+\subsection{Tempo Médio de Identificação (T_detect)}
+
+Corresponde ao intervalo entre a ocorrência de um evento de conflito e sua detecção pelo sistema. Deve ser registrado em milissegundos ou segundos.
+Baixos valores indicam maior consciência situacional.
+
+\subsection{Tempo Médio de Resolução (T_resolve)}
+
+Mede o tempo necessário para que uma ação corretiva seja aplicada após a identificação do conflito. Essa métrica está diretamente relacionada à eficácia das estratégias automáticas e da interação humano-máquina.
+
+\subsection{Taxa de Resoluções Bem-Sucedidas (success_rate)}
+
+Indica o percentual de conflitos solucionados sem violar restrições operacionais ou comprometer missões. É um indicador chave de confiabilidade do UTM.
+
+\subsection{Falsos Positivos e Falsos Negativos}
+
+Essas métricas avaliam como o sistema equilibra sensibilidade e precisão, permitindo identificar cenários onde operadores podem ser sobrecarregados (muitos falsos positivos) ou onde o sistema falha em alertar (falsos negativos).
+
+\subsection{Throughput de Simulação}
+
+Quantidade de execuções por hora ou por cluster computacional. Mede a escalabilidade do modelo e a eficiência do Campaign Orchestrator.
+
+\subsection{Latência CIS (Publicação → Propagação)}
+
+Avalia o tempo necessário para que mensagens e estados sejam distribuídos aos participantes, essencial para validar SLAs baseados na ED-318.
+
+\subsection{Robustez Frente a Ameaças (resilience_score)}
+
+Percentual de missões críticas que permanecem operacionais sob condições adversas, como spoofing, jamming ou tráfego hostil.
+Fundamental para cenários militares e experimentos de resiliência.
+
+\subsection{Tempo Médio de Recuperação (MTTR)}
+
+Mede quanto tempo o sistema leva para retornar ao funcionamento normal após uma falha. Conecta-se diretamente à robustez da federação de provedores e do DSS.
+
+\subsection{Métodos de Teste Recomendados para o Simulador UTM}
+
+A arquitetura modular do simulador UTM possibilita a aplicação de uma variedade de técnicas avançadas de teste, essenciais para validar robustez, segurança operacional, comportamento sob ameaça e conformidade regulatória. Cada método abaixo desempenha um papel complementar na avaliação do sistema.
+
+\subsection{Monte-Carlo e Latin Hypercube Sampling}
+
+Esses métodos permitem explorar grandes espaços de variáveis através de amostragem estatística. Ao variar parâmetros como densidade de tráfego, padrões de vento, latência de comunicação ou probabilidade de falha, é possível identificar limites operacionais e sensibilidades do sistema.
+O uso de Latin-Hypercube aumenta a cobertura de combinações, gerando cenários mais diversificados e reduzindo o risco de lacunas estatísticas.
+
+\subsection{Fuzzing de Inputs}
+
+O fuzzing insere entradas inesperadas ou malformadas — como planos de voo corrompidos, mensagens incompletas ou valores fora de faixa — com o objetivo de revelar vulnerabilidades de parsing, validação e resiliência do sistema.
+Esse método é particularmente eficaz na detecção de falhas silenciosas e comportamentos imprevisíveis, sobretudo em módulos críticos como ingestão de dados e APIs do CIS.
+
+\subsection{Adversarial Scenario Injection (Threat Feed)}
+
+Esse método insere eventos hostis deliberados, como spoofing de posição, jamming de sinais, mensagens falsas de USSP ou comportamentos maliciosos de aeronaves.
+O objetivo é avaliar a capacidade do sistema de detectar, desacoplar ou mitigar ameaças, fornecendo insumos para métricas de resiliência e para geração de pacotes de evidência em contextos de segurança.
+
+\section{Red-Team / Blue-Team Exercises}
+
+Nesse tipo de exercício, operadores humanos (Blue Team) interagem com agentes adversariais simulados (Red Team).
+Esse teste permite avaliar a sobrecarga cognitiva, a eficácia do suporte à decisão, e o comportamento do sistema em situações de ataque coordenado ou saturação intencional.
+Ele também fornece dados qualitativos sobre o desempenho do DSS e da interface humano-máquina.
+
+\subsection{Stress e Saturation Tests}
+
+Esses testes exploram os limites físicos e lógicos do sistema:
+
+densidade máxima de tráfego 4D,
+
+taxas elevadas de atualização,
+
+degradação proposital de latências e perdas de pacotes.
+O objetivo é identificar gargalos, falhas de escalabilidade e comportamentos emergentes sob carga extrema – fundamentais para validar a robustez do simulador e dos módulos de federação de provedores.
+
+\subsection{Regression Testing e Deterministic Replay}
+
+A capacidade de reproduzir exatamente um cenário — através de seeds fixas — é essencial para depuração e análise forense.
+O replay determinístico permite validar correções com segurança, comparando comportamento antes/depois de alterações e garantindo que novas funcionalidades não introduzam regressões.
+Esse mecanismo também é indispensável para geração de evidências verificáveis para autoridades reguladoras.
+
+\section{Formato das Evidências Geradas pelo Simulador}
+
+Para atender às necessidades de certificação, conformidade técnica e auditoria regulatória, o simulador deve produzir evidências estruturadas, assinadas e rastreáveis. Essas evidências compõem o material que será submetido a autoridades aeronáuticas ou entidades de avaliação.
+
+Pacote SORA-Like (JSON + PDF)
+
+O pacote principal consolida todos os elementos necessários para análise técnica de um cenário ou campanha:
+
+definição completa do cenário e parâmetros de entrada,
+
+classificação iGRC e ARC,
+
+mitigações aplicadas,
+
+trilhas de auditoria e logs assinados,
+
+resultados da campanha (KPIs, incidentes, análises).
+O objetivo é fornecer uma documentação coerente, auditável e compatível com processos inspirados no SORA.
+
+Relatórios de SLA
+
+Esses relatórios oferecem uma visão quantitativa sobre desempenho e disponibilidade:
+
+latência de publicação e propagação no CIS,
+
+disponibilidade e responsividade dos USSP simulados,
+
+violação de janelas de tempo críticas.
+Eles são especialmente importantes para autoridades que buscam validar limites de operação e identificar fragilidades no ecossistema UTM.
+
+Replay Package
+
+Conjunto de arquivos contendo:
+
+traces completos,
+
+telemetria detalhada,
+
+marcações de tempo das decisões (com assinatura).
+Esse pacote garante reprodutibilidade e permite reconstruir o comportamento do sistema quadro-a-quadro, usado em investigações, auditorias ou validação de regressões.
+
+Lista de Incidents
+
+Documento estruturado que relaciona:
+
+todos os eventos que violaram regras, SLAs ou separação,
+
+condições que levaram ao incidente,
+
+ações tomadas,
+
+eficácia das respostas tanto automáticas quanto humanas.
+Essa lista é fundamental para processos de análise de segurança e para verificar aderência a padrões operacionais.
+
+OBs AUTOR em 25.11.2025:
+gostei, porem nao noitei muito alinhamento com a minha arquitetura de necessidade dos especialistas militares de voo ATM que estao pensando nos gargalos do utm , para as diretrizes UTM fornecidas. Principalmente nos pontos iniciais que estamos que diZ respeito a testar os cenarios simulados dos testes de prova e em campo, conforme proposato pela ICAO, principalmente com relação a confluto, desconflito, gestão de provedores e DSS. Porem eles demonstram que todos estes dados precisa ir a um simulador robusto que possa prever milhares de caso de testes para efetivar e mehlrara a acertabilidade de resposta dos orgaos de fiscalizacao, frente aos grandes desafios, no que diz respeito ao compartilhamento do espaço, segurança, ataques voos conflitosos, tarifação, operações no espaço 4D , gestão das diferentes operações para autorizar, priorização de espaço, entre outros.
+
+\section{Mapeamento de Normas para Componentes da Arquitetura}
+
+Esta seção descreve como cada regulamentação internacional de UTM/U-Space foi mapeada para componentes específicos do simulador. Também são apresentados os princípios, diretrizes e obrigações de cada norma, destacando quais partes foram incorporadas ao modelo e quais ainda exigem extensão.
+
+\subsection{ICAO UTM Framework}
+O \textit{ICAO UTM Framework} define diretrizes globais para gestão do tráfego não tripulado, enfatizando:
+\begin{itemize}
+    \item Catálogo mínimo de serviços UTM (UDM, conformance monitoring, strategic deconfliction).
+    \item Integração operacional com o sistema ATM existente.
+    \item Segurança operacional como princípio norteador.
+    \item Necessidade de registro auditável, rastreabilidade e mecanismos para incident reporting.
+\end{itemize}
+
+\noindent
+\textbf{Componentes mapeados:}
+\begin{itemize}
+    \item \textbf{Simulation Engine}: modelagem dos serviços UTM obrigatórios.
+    \item \textbf{ATM Adapter}: coordenação entre UTM simulado e procedimentos ATM.
+    \item \textbf{SORA Module}: suporte à avaliação de risco seguindo diretrizes ICAO.
+    \item \textbf{Audit \& Evidence Store}: registro auditável conforme requisitos ICAO.
+\end{itemize}
+
+\subsection{FAA UTM ConOps}
+O \textit{FAA UTM Concept of Operations} estabelece:
+\begin{itemize}
+    \item Modelo federado de USS (similar ao USSP europeu), com responsabilidade dividida entre FAA e indústria.
+    \item Princípios de interoperabilidade entre provedores.
+    \item Troca de informações via APIs padronizadas.
+    \item Foco na autonomia do UTM para operações BVLOS e missões densas.
+\end{itemize}
+
+\noindent
+\textbf{Componentes mapeados:}
+\begin{itemize}
+    \item \textbf{USSP/USS Adapter}: representação de múltiplos provedores federados.
+    \item \textbf{API Gateway}: abstração para troca de mensagens inter-USSP.
+    \item \textbf{Auth \& Access Control}: aderência ao modelo FAA de responsabilidade compartilhada.
+\end{itemize}
+
+\subsection{SESAR / EUROCAE ED-318 (U-Space)}
+A especificação \textit{EUROCAE ED-318} é a referência técnica mais detalhada em termos de:
+\begin{itemize}
+    \item Definição formal de zonas geográficas (geozones) e suas propriedades.
+    \item Formatos de mensagens para o \textit{Common Information Service} (CIS).
+    \item Protocolos para intercâmbio entre USSPs e serviços U-Space.
+    \item Requisitos de latência, SLA e consistência de dados.
+\end{itemize}
+
+\noindent
+\textbf{Componentes mapeados:}
+\begin{itemize}
+    \item \textbf{CIS Service}: implementação dos modelos de dados e trocas ED-318.
+    \item \textbf{GeoZone Manager}: ingestão, validação e aplicação de zonas U-Space.
+\end{itemize}
+
+\subsection{JARUS SORA}
+A metodologia \textit{JARUS SORA} fornece o processo internacionalmente aceito para avaliação de risco em operações RPAS:
+\begin{itemize}
+    \item Cálculo de risco inicial (\textit{iGRC}).
+    \item Determinação do nível de robustez requerido (\textit{SAIL}).
+    \item Conjunto de mitigadores técnicos e organizacionais.
+    \item Exigência de documentação estruturada, justificativas e evidências para autoridades.
+\end{itemize}
+
+\noindent
+\textbf{Componente mapeado:}
+\begin{itemize}
+    \item \textbf{Risk Assessment (SORA Module)}: cálculo automatizado de iGRC, SAIL e mitigadores, além de geração de pacotes de evidência.
+\end{itemize}
+
+\section{Cobertura Atual da Arquitetura}
+A arquitetura atual do simulador cobre:
+\begin{itemize}
+    \item Blocos explícitos para CIS/ED-318.
+    \item Pipeline SORA para avaliação de risco.
+    \item Abstração para múltiplos USSP/USS no modelo federado.
+    \item Camada de segurança operacional e auditoria.
+\end{itemize}
+
+\section{Pontos que Requerem Extensão}
+Os seguintes itens ainda exigem desenvolvimento adicional:
+\begin{itemize}
+    \item Implementação completa dos esquemas ED-318 (JSON/XML) e validadores.
+    \item Testes documentados de desempenho (SLA de latência, disponibilidade).
+    \item Geração automatizada de pacotes SORA com justificativas formais.
+    \item Mecanismos de certificação: logs assinados, retenção, timestamps confiáveis.
+\end{itemize}
+
+\section{Recomendações Práticas e Próximos Passos}
+
+\subsection{1. Validar ED-318 no CIS Service}
+Implementação completa dos esquemas ED-318 no serviço CIS, incluindo:
+\begin{itemize}
+    \item Validadores estruturais (JSON/XML).
+    \item Conjunto de testes (\textit{test harness}) para cenários CIS.
+\end{itemize}
+
+\subsection{2. Pipeline SORA automatizado}
+Construção de pipeline end-to-end contendo:
+\begin{itemize}
+    \item Templates Annex A (\textit{ConOps}).
+    \item Cálculo automatizado de iGRC/SAIL.
+    \item Geração do pacote final de evidência.
+\end{itemize}
+
+\subsection{3. Testes de integração USS}
+\begin{itemize}
+    \item Execução de cenários com USSPs em modo \textit{mock}.
+    \item Medição de latências e ajustes de cache.
+\end{itemize}
+
+\subsection{4. Fortalecimento de Segurança}
+\begin{itemize}
+    \item Uso de HSM para chaves críticas.
+    \item Assinatura de logs e política de retenção.
+    \item Rotina de pentest orientada às recomendações ICAO.
+\end{itemize}
+
+\subsection{5. Painel Unificado de KPIs}
+Desenvolver dashboard com KPIs padronizados:
+\begin{itemize}
+    \item Latência CIS.
+    \item Disponibilidade USSP.
+    \item Tempo de detecção e resolução de conflitos.
+\end{itemize}
+
+\section{Fontes Primárias Consultadas}
+\begin{itemize}
+    \item \textbf{ICAO}: UTM Framework / Guidance Material.
+    \item \textbf{FAA}: UTM Concept of Operations v2.0.
+    \item \textbf{EUROCAE}: ED-318 Technical Specification.
+    \item \textbf{SESAR}: U-Space ConOps.
+    \item \textbf{JARUS}: SORA v2.x.
+\end{itemize}
+
+\section{Resumo da Proposta de Adequação Normativa da Arquitetura}
+
+A arquitetura do simulador foi revisada e aprimorada para alinhar-se às principais referências regulatórias internacionais: ICAO UTM Framework, FAA UTM ConOps, EUROCAE ED-318 (U-Space), SESAR e JARUS SORA. As mudanças afetam diretamente os componentes centrais do sistema, seus fluxos de dados, requisitos funcionais e evidências regulatórias associadas.
+
+\subsection{Principais Alterações Implementadas}
+
+\paragraph{1. CIS como Serviço Explícito (ED-318)}
+O \textit{Common Information Service} foi isolado como serviço dedicado, com schemas formais para geozonas, mensagens de espaço aéreo e informações tipo NOTAM. A estrutura segue diretamente os modelos e formatos exigidos pela norma ED-318, garantindo compatibilidade com U-Space e padronização das trocas de dados.
+
+\paragraph{2. Interfaces USSP/USS Padronizadas (ICAO/FAA/SESAR)}
+Foram definidas interfaces separadas para comunicação entre provedores de serviço UTM (USSP/USS), mediadas por um \textit{API Gateway}. Esse modelo segue o conceito federado estabelecido pelo FAA UTM ConOps e a delimitação de papéis entre operador, provedor e autoridade proposta em ICAO/SESAR. A arquitetura agora explicita responsabilidades e pontos de delegação.
+
+\paragraph{3. Módulo SORA Automatizado (JARUS)}
+O pipeline SORA foi incorporado, permitindo processamento automático do fluxo \textit{CONOPS → iGRC → mitigations → SAIL}. O módulo gera evidências exportáveis (JSON/PDF), aderentes às exigências do \textit{JARUS SORA v2.x}. Este componente suporta análises repetíveis e documentação técnica para submissão a autoridade.
+
+\paragraph{4. Segurança, Auditoria e Cadeia de Custódia (ICAO/EASA)}
+Foram incluídos mecanismos de segurança compatíveis com recomendações ICAO/EASA:
+\begin{itemize}
+    \item Autenticação forte (OAuth2 e mTLS).
+    \item Proteção de chaves via HSM.
+    \item Logs imutáveis com assinaturas digitais (WORM/append-only).
+    \item Política de retenção e rastreabilidade completa para fins regulatórios.
+\end{itemize}
+Essas medidas garantem integridade, auditabilidade e conformidade com requisitos de investigação operacional.
+
+\paragraph{5. Interoperabilidade ATM/ATC (ICAO/FAA)}
+A arquitetura inclui adaptadores para formatos aeronáuticos amplamente utilizados (AIXM, ASTERIX, FIXM), permitindo troca de informações entre o núcleo UTM e sistemas ATM simulados. Foram definidos limites de delegação, incluindo critérios para handover para ATC durante cenários de contingência.
+
+\paragraph{6. Medição de SLAs e KPIs Regulamentares}
+A solução incorpora um módulo de coleta e análise de indicadores:
+\begin{itemize}
+    \item Latência de serviços CIS (ED-318).
+    \item Disponibilidade e responsividade de USSPs (FAA/SESAR).
+    \item Tempos de detecção e resolução de conflitos.
+\end{itemize}
+Esses dados alimentam dashboards padronizados e servem como evidências para ensaios regulatórios e ambientes sandbox.
+
+\subsection{Conjuntos de Artefatos Gerados}
+A proposta inclui ainda um conjunto completo de diagramas e representações:
+\begin{itemize}
+    \item Diagramas PlantUML revisados para arquitetura geral e detalhada.
+    \item UMLs específicos para CIS/Geozonas (ED-318), USSP/USS (FAA/ICAO), módulo SORA (JARUS), integração ATM e segurança/auditoria.
+    \item Mapeamento direto norma → componente, destacando aderência e lacunas remanescentes.
+\end{itemize}
+
+\subsection{Recomendações e Próximos Passos Prioritários}
+
+\paragraph{1. Validação Completa ED-318}
+Implementar validadores automáticos (JSON/XML) para todos os schemas ED-318, além de adaptadores robustos no serviço CIS, assegurando fidelidade aos formatos oficiais.
+
+\paragraph{2. SORA Automatizado e Geração de Evidência}
+Concluir pipeline de geração de artefatos de risco (iGRC, mitigations, SAIL), exportação em PDF/JSON e templates baseados no Annex A. Este fluxo deve permitir submissão direta às autoridades.
+
+\paragraph{3. Ensaios de Performance com SLAs}
+Executar testes de carga e latência, com coleta contínua de KPIs e estruturação de dashboards conforme requisitos EASA/FAA para ambientes de certificação e sandbox.
+
+\paragraph{4. Fortalecimento de Segurança e Auditoria}
+Expandir mecanismos de segurança com logs imutáveis, HSM, monitoramento contínuo e práticas de gestão de risco alinhadas ao guidance cibernético da EASA.
+
+\subsection{Síntese Geral}
+As alterações propostas elevam o simulador ao nível das referências regulatórias mais importantes, garantindo compatibilidade estrutural com U-Space, ICAO e FAA, e incorporando uma base robusta de avaliação de risco via SORA. A arquitetura resultante é modular, auditável, interoperável e pronta para sustentação de ensaios regulatórios, experimentação controlada e comprovação de conformidade técnica em sandbox.
+
+\section{Grau de Alinhamento Normativo da Arquitetura}
+
+A arquitetura revisada do simulador apresenta diferentes níveis de aderência às normas e guias internacionais, variando entre conformidade forte, conformidade parcial e funções propositalmente fora do escopo regulatório. A seguir descrevem-se os principais pontos de alinhamento.
+
+\subsection{Alinhamento Forte com Normas Internacionais}
+
+A solução demonstra alto grau de conformidade nas áreas relacionadas à modelagem de serviços compartilhados e gestão de informação. Em particular, foram implementados de forma explícita os seguintes elementos:
+\begin{itemize}
+    \item \textbf{Serviços CIS e Estruturas de Intercâmbio}: alinhados às diretrizes de EASA, SESAR e FAA, que definem estruturas equivalentes para troca de informações críticas no ecossistema UTM/U-Space.
+    \item \textbf{Representação de Geozonas}: compatível com os requisitos funcionais e operacionais estabelecidos por ED-318 e pelos projetos SESAR.
+    \item \textbf{Monitoramento Operacional e Interface para Operador}: coerente com os padrões de vigilância, supervisão e transparência exigidos em ambientes regulados.
+\end{itemize}
+Essas partes da arquitetura obedecem de forma clara ao modelo europeu de U-Space, ao guidance da EASA e às práticas do FAA UTM ConOps para serviços federados e informações compartilhadas.
+
+\subsection{Pontos Parcialmente Atendidos}
+
+Alguns elementos apresentam boa estrutura arquitetural, mas ainda requerem implementação normativa detalhada para atender plenamente aos padrões oficiais. Entre os principais pontos parcialmente cobertos estão:
+\begin{itemize}
+    \item \textbf{Conformidade formal de USSP/USS}: embora os adaptadores e fluxos estejam definidos, faltam requisitos específicos de certificação, testes de conformidade e mecanismos padronizados de evidência.
+    \item \textbf{Workflow SORA e Formalização Completa de Risco}: o módulo SORA está previsto e parcialmente implementado, mas necessita de justificativas de mitigação, templates oficiais e integração completa do fluxo \emph{iGRC → SAIL}.
+    \item \textbf{Requisitos de SLA, Métricas Normativas e Schemas ED-318}: a arquitetura já contém componentes de medição e coleta, porém ainda carece dos esquemas completos, métricas exatas e relatórios padronizados exigidos pelas normas europeias.
+\end{itemize}
+Esses itens representam áreas em que a estrutura existe e está corretamente posicionada, mas depende de desenvolvimento adicional para demonstrar conformidade formal em processos de auditoria ou certificação.
+
+\subsection{Funcionalidades Fora do Escopo das Normas}
+
+Determinadas capacidades do simulador não são exigidas pelas normas internacionais, mas são mantidas por sua utilidade operacional e valor técnico para ensaios. Estas funcionalidades não conflitantes incluem:
+\begin{itemize}
+    \item \textbf{Motor de Dinâmica de Voo}: não regulado por ICAO/EASA/FAA para fins de UTM, mas essencial para representar comportamentos realistas.
+    \item \textbf{Geração de Tráfego Sintético}: não normatizada, porém crítica para cargas de teste, cenários adversariais e modelagem estatística.
+    \item \textbf{Visualizações Avançadas}: úteis para análise exploratória, mas sem exigências formais em guidelines internacionais.
+    \item \textbf{Testes de Estresse e Saturação}: práticas recomendadas em engenharia, porém não especificadas em documentos U-Space/FAA.
+\end{itemize}
+
+\noindent Essas funções estão deliberadamente fora do escopo regulatório, mas são cruciais para validar comportamentos, gerar campanhas experimentais e produzir evidências consistentes para ambientes sandbox e avaliações técnicas.
+
+\section{Análise de Conformidade por Requisito}
+
+A seguir apresenta-se a análise descritiva de cada requisito técnico da arquitetura, indicando se é exigido pelas regulações internacionais (EASA, FAA, SESAR, ICAO), o grau de cobertura atual na arquitetura e as principais observações necessárias para atingir conformidade plena.
+
+\subsection{Serviços CIS e Troca de Dados (ED-318)}
+
+As regulações europeias e documentos SESAR/ED-318 exigem modelos de dados padronizados, endpoints bem definidos e requisitos de desempenho para serviços CIS.  
+Na arquitetura atual, o suporte é \textbf{parcial}: existem os módulos \texttt{CIS\_MOCK} e \texttt{CIS\_SVC}, capazes de emular o intercâmbio conforme ED-318.  
+Entretanto, ainda é necessária a implementação completa dos schemas ED-318/ED-269, além de testes formais de temporização e conformidade.  
+Os reguladores exigem SLAs explícitos, formatos oficiais e validadores automáticos.
+
+\subsection{Certificação e Requisitos de USSP / Provedor U-Space}
+
+As normas EASA U-Space definem requisitos de responsabilidade, desempenho, disponibilidade e acesso seguro para provedores USSP.  
+A arquitetura cobre o tema de forma \textbf{parcial}: USSP e ATC são emulados, mas não há módulo formal de certificação, geração de relatórios de SLA ou auditoria automatizada.  
+Para conformidade plena são necessários logs imutáveis, trilhas de evidência e relatórios padronizados para autoridades.
+
+\subsection{Avaliação de Risco (SORA / ICAO)}
+
+A ICAO e o JARUS SORA exigem processos formais de análise de risco, mitigação e níveis equivalentes de confiabilidade operacional.  
+O ambiente atual fornece \texttt{REPORTS} e \texttt{STRATEGIC\_ANALYSIS}, porém a conformidade é apenas \textbf{parcial}.  
+Faz-se necessário um módulo SORA completo com workflow: entrada do cenário, cálculo de \textit{intrinsic risk}, definição das mitigations e produção de documentação final estruturada.
+
+\subsection{Geo-awareness, Geozones e Zonas Dinâmicas}
+
+ED-318, EAR e SESAR exigem suporte a geozonas dinâmicas, atualizações em tempo real e consistência entre provedores.  
+A arquitetura atende \textbf{plenamente} o requisito: os módulos \texttt{ADAPTERS} e \texttt{CIS\_MOCK} já oferecem suporte a zonas dinâmicas.  
+Permanece necessária a validação de reconfigurações em tempo real e testes de latência/distribuição.
+
+\subsection{Segurança da Informação e Cibersegurança}
+
+As regulações EASA exigem práticas de gestão de risco, proteção criptográfica e integridade operacional.  
+A solução cobre o tema de forma \textbf{parcial}: os módulos \texttt{AUTH} e \texttt{AUDIT} existem, porém recomenda-se reforço com HSM, criptografia ponta-a-ponta, políticas de retenção e testes de segurança.  
+A conformidade requer evidências formais e cadeia de custódia.
+
+\subsection{Monitoramento, Desempenho e KPIs Operacionais}
+
+EASA e SESAR exigem SLAs claros e métricas de desempenho para serviços U-Space.  
+A arquitetura oferece \textbf{cobertura completa}: os módulos \texttt{METRICS}, \texttt{REPORT\_SVC} e \texttt{DW} atendem a coleta e monitoramento.  
+Falta incorporar KPIs específicos exigidos pelas normas (latência CIS, disponibilidade USSP, tempos de detecção e resolução).
+
+\subsection{Interoperabilidade com Sistemas ATM / ATC}
+
+A FAA e a ICAO determinam processos de intercâmbio com sistemas ATM, incluindo formatação, segurança e limites de delegação.  
+A arquitetura possui \textbf{cobertura parcial}: módulos como \texttt{ATC\_EMU} e \texttt{ADAPTERS} viabilizam a integração, mas o uso com ATC real exige certificação, formatos completos (AIXM, CIDIN, ASTM) e validação operacional.
+
+\subsection{Auditabilidade e Logs Imutáveis}
+
+Regulações EASA e ICAO exigem rastreabilidade completa e registros à prova de adulteração.  
+O módulo \texttt{AUDIT} atende parcialmente ao requisito.  
+Para conformidade completa, recomenda-se WORM storage, assinaturas digitais, retenção regulatória e capacidade de exportação de logs assinados.
+
+\subsection{Procedimentos Operacionais e Operador no Loop}
+
+Normas SESAR e FAA exigem workflows operacionais claros, responsabilidades definidas e suporte a operações com humano no loop.  
+A arquitetura atende \textbf{plenamente}: componentes como \texttt{UI}, \texttt{Operator CLI} e \texttt{Scenario Manager} suportam testes e operações H-in-the-loop.  
+Sugere-se adicionar checklists operacionais padronizados.
+
+\subsection{Funcionalidades Específicas de Simulação}
+
+Aspectos como testes de estresse, replays determinísticos, tráfego sintético e telemetria enriquecida não são regulamentados.  
+A arquitetura cobre esses itens \textbf{totalmente}, com \texttt{SAT\_SVC}, \texttt{Scenario Service} e módulos de telemetria.  
+Apesar de não obrigatórios, esses recursos são importantes para ensaios e demonstração de conformidade em cenários controlados.
+
+\section{Referências Técnicas e Arquiteturais}
+
+Documentos públicos de referência influenciam o desenho da arquitetura. As principais fontes incluem:
+
+\begin{itemize}
+    \item \textbf{EASA U-Space (EAR \& Regulamentos)}: conjunto consolidado de regras e diretrizes para serviços U-Space na União Europeia.
+    \item \textbf{EUROCAE ED-318 e Projetos Sandbox}: especificações técnicas de geozonas, formatos de dados e intercâmbio.
+    \item \textbf{SESAR U-Space CONOPS}: princípios arquiteturais para organização de serviços, CIS e interoperabilidade.
+    \item \textbf{NASA UTM ConOps v1.0 / NTRS}: definição dos blocos USS, troca de dados, responsabilidades e níveis TCL.
+    \item \textbf{FAA UTM ConOps v2.0}: arcabouço regulatório e operacional dos EUA para serviços UTM e federated USS.
+    \item \textbf{Protótipos Airbus/EUROCONTROL e Relatórios de Demonstração}: úteis para padrões de integração e simulação de riscos.
+\end{itemize}
+
+\section{Referências Técnicas e Documentos Normativos}
+
+\subsection{Documentos Regulamentares e Técnicos}
+
+\begin{description}
+
+    \item[EASA – U-Space Regulation (EU) 2021/664] 
+    Conjunto de regras europeias que definem os serviços U-Space, responsabilidades dos U-Space Service Providers (USSP), requisitos de desempenho, SLAs, segurança operacional e interfaces de informação. Contém o material consolidado conhecido como Easy Access Rules (EAR).
+
+    \item[EUROCAE ED-318] 
+    Especificação técnica oficial para modelos de dados, geozonas, mensagens, requisitos de troca de informação e padrões de interoperabilidade para serviços U-Space. Inclui formatos de dados, semântica, endpoints e regras de sincronização.
+
+    \item[EUROCAE ED-269]
+    Documento complementar ao ED-318 que detalha estruturas para serviços U-Space, incluindo requisitos de desempenho, consistência e validação de dados.
+
+    \item[SESAR – U-Space Concept of Operations (CONOPS)] 
+    Blueprint conceitual europeu para definição de serviços U-Space, CIS (Common Information Services), padrões de integração com ATM e princípios de operação.
+
+    \item[JARUS SORA v2.x (Specific Operations Risk Assessment)]
+    Metodologia padronizada internacionalmente para avaliação de risco operacional de operações com RPAS/UAS. Define iGRC, mitigations, SAIL, requisitos de assurance e documentação obrigatória para submissão à autoridade.
+
+    \item[NASA UTM – ConOps v1.0 / NTRS Material]
+    Arquitetura conceitual do ecossistema UTM (UAS Traffic Management) contendo componentes USS, provedores de serviço, intercâmbio de dados, reserva de volumes de espaço aéreo e responsabilidades operacionais.
+
+    \item[FAA – UTM ConOps v2.0]
+    Descrição oficial da Arquitetura UTM nos Estados Unidos, incluindo serviços USS, UAS Volume Reservations, requisitos de segurança, responsabilidades do operador e do provedor e integração com o sistema ATC.
+
+    \item[U-Space Sandbox Standards and Services (Transpordiamet)]
+    Documentação pública que descreve a arquitetura de referência para sandboxes U-Space, incluindo serviços CIS, geozonas, requisitos de latência, disponibilidade, schemas ED-318 e indicadores regulatórios.
+
+    \item[Airbus / EUROCONTROL Prototypes]
+    Relatórios de demonstrações e protótipos de simulações U-Space utilizados para validação de requisitos de integração, desempenho, segurança e coordenação multi-USSP.
+
+\end{description}
+
+\section{Lista de Siglas e Definições}
+
+\begin{description}
+
+    \item[ATM] Air Traffic Management — Gerenciamento do tráfego aéreo.
+    \item[ATC] Air Traffic Control — Controle de tráfego aéreo.
+    \item[AIXM] Aeronautical Information Exchange Model — Modelo para troca de informação aeronáutica.
+    \item[ASTERIX] All Purpose Structured Eurocontrol Surveillance Information Exchange — Padrão de vigilância EUROCONTROL.
+    \item[FIXM] Flight Information Exchange Model — Modelo para troca de informação de voo.
+    \item[CIS] Common Information Services — Serviço de informação comum para U-Space/UTM.
+    \item[CIS\_SVC / CIS\_MOCK] Versões simuladas/implementadas de CIS usadas no simulador.
+    \item[CONOPS] Concept of Operations — Documento conceitual de operação.
+    \item[DAL] Design Assurance Level — Nível de garantia de projeto.
+    \item[EASA] European Union Aviation Safety Agency — Agência Europeia de Segurança da Aviação.
+    \item[ED-318 / ED-269] Documentos EUROCAE que definem dados, geozonas e troca de informação U-Space.
+    \item[FAA] Federal Aviation Administration — Administração Federal de Aviação (EUA).
+    \item[EAR] Easy Access Rules — Consolidação de regras EASA.
+    \item[HSM] Hardware Security Module — Equipamento de segurança para gestão de chaves criptográficas.
+    \item[iGRC] Intrinsic Ground Risk Class — Classe intrínseca de risco ao solo (SORA).
+    \item[JARUS] Joint Authorities for Rulemaking on Unmanned Systems — Grupo internacional para réglementation de UAS/RPAS.
+    \item[KPI] Key Performance Indicator — Indicador-chave de desempenho.
+    \item[LHS] Latin Hypercube Sampling — Técnica estatística de amostragem.
+    \item[mTLS] Mutual TLS — Autenticação mútua via certificados.
+    \item[PAS] Provider Agent System — Componente do MAS no simulador.
+    \item[MAS] Multi-Agent System — Sistema multiagente.
+    \item[MRA] Mission Resource Agent — Agente de recursos do simulador.
+    \item[USSP / USS] U-Space Service Provider / UTM Service Supplier (EUA) — Fornecedores de serviços U-Space/UTM.
+    \item[SAT\_SVC] Serviço de saturação e estresse do simulador.
+    \item[SAIL] Specific Assurance and Integrity Level — Nível de integridade/garantia SORA.
+    \item[SLAs] Service Level Agreements — Acordos de desempenho de serviços.
+    \item[SORA] Specific Operation Risk Assessment — Metodologia internacional de avaliação de risco operacional.
+    \item[TCL] Technical Capability Level — Níveis do programa de testes UTM da NASA.
+    \item[UI] User Interface — Interface do Operador.
+    \item[UTM] Unmanned Aircraft System Traffic Management.
+    \item[U-Space] Ecossistema europeu equivalente ao UTM.
+    \item[WORM] Write-Once Read-Many — Armazenamento imutável para logs/auditoria.
+
+\end{description}
+
+
+
+---
 Neste dia estou compilando todos os textos que estão separados entre os trabalhos do SAC, MRCF, PLANAR e outros sobre UTM e ultimos feitos sobre regulacao e arquitetura de BVLOS, nas semanas entre 18 á 28.11
 
 Compilei a maquina das arquiteturas até chegar no seguinte:
