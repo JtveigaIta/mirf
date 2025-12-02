@@ -1,3 +1,8 @@
+PESQUISA 02.12.2025 (Foi compilado o texto, agora preciso)
+---
+( ) Separar só o que interessa para apresentar - Dez Slides
+( ) Rodar o template com conteudo e formato 
+
 PESQUISA 28.11.2025 (Compilar os textos relevantes para o Template Overleaft da QUALIS)
 ---
 Basicamente o compilado da secao proposta que fiz hoje:
