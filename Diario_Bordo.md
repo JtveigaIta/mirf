@@ -2,6 +2,10 @@ PESQUISA 02.12.2025 (Foi compilado o texto, agora preciso)
 ---
 ( ) Separar só o que interessa para apresentar - Dez Slides
 ( ) Rodar o template com conteudo e formato 
+( ) Colocar os dizeres da propriedade intelectual;
+( ) Colocar o material do artigo MIRF online;
+( ) Colocar o material do word escrito do DOC;
+( ) Colocar o material do word escrito do SAC;
 
 PESQUISA 28.11.2025 (Compilar os textos relevantes para o Template Overleaft da QUALIS)
 ---
