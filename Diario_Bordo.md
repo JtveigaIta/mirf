@@ -1,3 +1,23 @@
+PESQUISA 08.01.2026 (Feitos em 2025)
+---
+Em 2025 foi muito promissor para PLANAR, especialmente na construção sólida de embasamento técnico especialista e de pesquisa. Nesse interim realizamos o seguinte, participação no SIGE, tambem registro da propriedade intelectual MRCF, publicamos um artigo do tipo draft com os primeiros resultados do simulador e tambem disponibilidade dos códigos de maneira acâdemica para teste. Nesse mesmo ritmo, nos motivou a criação da pagina tipo LP, que informa sobre o que é, onde desejamos chegar, para além disso, montamos um curso completo com 18 aulas, a ideia era disponibilizar nas principais plataformas digitais, no entanto no último ensaio do BR-UTM, conhecemos uma empresa de aviação e estamos iniciando uma parceria de pesquisa. Nesse lado junto as parcerias e instituições, realizamos dois relatórios e pesquisa aprofundada sobre o novo UTM, baseado em entrevistas e especificação de requisitos que estão registrados, participamos de dois ensaios físicos, além das reuniões de pesqusia semanais.
+Agora sobre os ultimos feitos, a Wiki planar começa ganhar forma, começamos a gravar as aulas, a primeira foi a IMENTA DO CURSO  que já está disponível gravado em estudio. Como próximos passos para 2026, pretendemos:
+( ) Gravar as 18 aulas em estudio;
+( ) Gravar o Pitch do Projeto para apresentação a Investidores e parceiros;
+( ) Marcar reunião para apresentar na Encubaaero
+( ) Realizar nosso primeiro turma do Planar (cOWORKING)
+( ) Fazer o curso preparatorio de integração com Aviacao
+( ) Fazer uma primeira aula de VOO
+( ) Adquirir o Drone para treinos
+( ) Apresentar em congresso internacional o MRCF
+( ) Enviar TESE da QUALIFICAÇÃO DO MIRF
+( ) Gravar em Estudio apresentacao do MIRF
+( ) Fazer o primeiro prototipo não funcional do PLANAR (Aeromodelo)
+( ) Fazer 50 brindes de mesa em impressos 3D do PLANAR
+( ) No 2S conseguir uma TURMA de IC para embarcar o código e publicar resultados
+( ) Participar dos Ensaios BR-UTM como provedor, tendo o dispositivo físico
+( ) No fim do ano ter uma versão prototipo de plataforma que integra ao BR-UTM e fornece serviços.
+
 PESQUISA 02.12.2025 (Foi compilado o texto, agora preciso)
 ---
 ( ) Separar só o que interessa para apresentar - Dez Slides
